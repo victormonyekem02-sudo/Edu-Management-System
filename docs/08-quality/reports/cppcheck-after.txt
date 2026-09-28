@@ -1,0 +1,10 @@
+lib/src/services/AdminService.cpp:128: [style/useStlAlgorithm] Consider using std::transform algorithm instead of a raw loop.
+lib/src/services/DirectoryService.cpp:31: [style/useStlAlgorithm] Consider using std::transform algorithm instead of a raw loop.
+app/src/AdminMenu.cpp:133: [style/useStlAlgorithm] Consider using std::transform algorithm instead of a raw loop.
+app/src/ConsoleIO.cpp:250: [style/useStlAlgorithm] Consider using std::accumulate algorithm instead of a raw loop.
+app/src/LecturerMenu.cpp:27: [style/useStlAlgorithm] Consider using std::transform algorithm instead of a raw loop.
+app/src/LecturerMenu.cpp:41: [style/useStlAlgorithm] Consider using std::transform algorithm instead of a raw loop.
+app/src/LecturerMenu.cpp:75: [style/useStlAlgorithm] Consider using std::find_if algorithm instead of a raw loop.
+app/src/LecturerMenu.cpp:121: [style/useStlAlgorithm] Consider using std::transform algorithm instead of a raw loop.
+app/src/RoleMenu.cpp:54: [style/useStlAlgorithm] Consider using std::transform algorithm instead of a raw loop.
+app/src/main.cpp:31: [style/constParameter] Parameter 'argv' can be declared as const array

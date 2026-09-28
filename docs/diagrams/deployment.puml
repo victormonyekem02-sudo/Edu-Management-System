@@ -1,0 +1,28 @@
+@startuml deployment
+!pragma layout smetana
+title Deployment Diagram - Moderated LMS v1.x (single school computer, offline)
+
+node "School computer\n<<device>>\nWindows 10/11 x64 (or Ubuntu 22.04+)\n>= 2 GB RAM, dual-core" as PC {
+  node "Operating system\n<<execution environment>>" as OS {
+    artifact "lms.exe\n(statically linked:\nlms_core, lms_ui, SQLite 3.46,\nArgon2 reference)" as EXE
+    artifact "lms.db\n(SQLite database, WAL mode)" as DB
+    artifact "lms.db-wal / lms.db-shm" as WAL
+    artifact "doc/\n(installation guide, user manuals,\nrelease notes)" as DOCS
+  }
+  folder "Backup folder / USB drive\n(daily copy of lms.db)" as BK
+}
+
+actor "Staff and students\n(one at a time, at the keyboard)" as Users
+
+Users --> EXE : console session
+EXE --> DB : reads / writes\n(SQLite C API, file locking)
+DB .. WAL
+DB ..> BK : scheduled copy\n(technician task)
+
+note right of PC
+  No network connection is required (NFR-09).
+  All four roles use the same executable; the
+  role is decided at login. Users log out so
+  the next person can log in.
+end note
+@enduml

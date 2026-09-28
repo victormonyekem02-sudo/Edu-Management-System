@@ -1,0 +1,609 @@
+Running main() from <deps>/googletest-1.15.2/googletest/src/gtest_main.cc
+[==========] Running 264 tests from 25 test suites.
+[----------] Global test environment set-up.
+[----------] 25 tests from SystemTest
+[ RUN      ] SystemTest.ST01_SubmitOnTime_MainFlow
+[       OK ] SystemTest.ST01_SubmitOnTime_MainFlow (37 ms)
+[ RUN      ] SystemTest.ST02_ResubmitBeforeDeadline_AlternativeFlow
+[       OK ] SystemTest.ST02_ResubmitBeforeDeadline_AlternativeFlow (29 ms)
+[ RUN      ] SystemTest.ST03_SubmitLate_AlternativeFlow
+[       OK ] SystemTest.ST03_SubmitLate_AlternativeFlow (34 ms)
+[ RUN      ] SystemTest.ST04_ResubmitAfterDeadline_ExceptionFlow
+[       OK ] SystemTest.ST04_ResubmitAfterDeadline_ExceptionFlow (26 ms)
+[ RUN      ] SystemTest.ST05_UnknownAssignment_ExceptionFlowSessionContinues
+[       OK ] SystemTest.ST05_UnknownAssignment_ExceptionFlowSessionContinues (28 ms)
+[ RUN      ] SystemTest.ST06_EmptySubmission_ExceptionFlow
+[       OK ] SystemTest.ST06_EmptySubmission_ExceptionFlow (24 ms)
+[ RUN      ] SystemTest.ST07_NotEnrolled_ExceptionFlow
+[       OK ] SystemTest.ST07_NotEnrolled_ExceptionFlow (24 ms)
+[ RUN      ] SystemTest.ST08_LecturerMarksLateWorkWithPenalty
+[       OK ] SystemTest.ST08_LecturerMarksLateWorkWithPenalty (28 ms)
+[ RUN      ] SystemTest.ST09_RemarkWithoutReason_ExceptionFlow
+[       OK ] SystemTest.ST09_RemarkWithoutReason_ExceptionFlow (35 ms)
+[ RUN      ] SystemTest.ST10_MarkOutOfRangeIsReprompted
+[       OK ] SystemTest.ST10_MarkOutOfRangeIsReprompted (26 ms)
+[ RUN      ] SystemTest.ST11_ModerateReleaseAndStudentSeesMark
+[       OK ] SystemTest.ST11_ModerateReleaseAndStudentSeesMark (47 ms)
+[ RUN      ] SystemTest.ST12_StudentCannotSeeUnreleasedMark
+[       OK ] SystemTest.ST12_StudentCannotSeeUnreleasedMark (24 ms)
+[ RUN      ] SystemTest.ST13_HodAdjustsMarkWithReason
+[       OK ] SystemTest.ST13_HodAdjustsMarkWithReason (32 ms)
+[ RUN      ] SystemTest.ST14_HodOfOtherDepartmentIsRefused
+[       OK ] SystemTest.ST14_HodOfOtherDepartmentIsRefused (30 ms)
+[ RUN      ] SystemTest.ST15_ReleaseCancelledKeepsMarksHidden
+[       OK ] SystemTest.ST15_ReleaseCancelledKeepsMarksHidden (31 ms)
+[ RUN      ] SystemTest.ST16_WrongPasswordIsRejected
+[       OK ] SystemTest.ST16_WrongPasswordIsRejected (25 ms)
+[ RUN      ] SystemTest.ST17_EachRoleSeesOnlyItsOwnMenu
+[       OK ] SystemTest.ST17_EachRoleSeesOnlyItsOwnMenu (26 ms)
+[ RUN      ] SystemTest.ST18_InvalidMenuInputDoesNotCrash
+[       OK ] SystemTest.ST18_InvalidMenuInputDoesNotCrash (30 ms)
+[ RUN      ] SystemTest.ST19_EndOfInputExitsCleanly
+[       OK ] SystemTest.ST19_EndOfInputExitsCleanly (23 ms)
+[ RUN      ] SystemTest.ST21_AdminCreatesAndEnrolsStudentWhoCanThenLogIn
+[       OK ] SystemTest.ST21_AdminCreatesAndEnrolsStudentWhoCanThenLogIn (35 ms)
+[ RUN      ] SystemTest.ST22_LecturerGrantsExtensionShownToStudent
+[       OK ] SystemTest.ST22_LecturerGrantsExtensionShownToStudent (28 ms)
+[ RUN      ] SystemTest.ST23_ChangePassword
+[       OK ] SystemTest.ST23_ChangePassword (26 ms)
+[ RUN      ] SystemTest.ST24_AccountLocksAfterFiveFailures
+[       OK ] SystemTest.ST24_AccountLocksAfterFiveFailures (30 ms)
+[ RUN      ] SystemTest.ST25_SubmitFileByPath
+[       OK ] SystemTest.ST25_SubmitFileByPath (34 ms)
+[ RUN      ] SystemTest.ST26_MissingOrOversizedFileIsRejected
+[       OK ] SystemTest.ST26_MissingOrOversizedFileIsRejected (32 ms)
+[----------] 25 tests from SystemTest (765 ms total)
+
+[----------] 1 test from SystemFirstRun
+[ RUN      ] SystemFirstRun.ST20_FirstRunCreatesAdministrator
+[       OK ] SystemFirstRun.ST20_FirstRunCreatesAdministrator (12 ms)
+[----------] 1 test from SystemFirstRun (12 ms total)
+
+[----------] 1 test from SystemFileDb
+[ RUN      ] SystemFileDb.ST27_DatabaseFileCannotBeSubmitted
+[       OK ] SystemFileDb.ST27_DatabaseFileCannotBeSubmitted (66 ms)
+[----------] 1 test from SystemFileDb (66 ms total)
+
+[----------] 6 tests from NotificationTest
+[ RUN      ] NotificationTest.LecturerIsToldAboutSubmissionsIncludingLateOnes
+[       OK ] NotificationTest.LecturerIsToldAboutSubmissionsIncludingLateOnes (28 ms)
+[ RUN      ] NotificationTest.ResubmissionIsReported
+[       OK ] NotificationTest.ResubmissionIsReported (30 ms)
+[ RUN      ] NotificationTest.HeadOfDepartmentIsToldWhenMarkAwaitsModeration
+[       OK ] NotificationTest.HeadOfDepartmentIsToldWhenMarkAwaitsModeration (25 ms)
+[ RUN      ] NotificationTest.StudentLearnsNothingBeforeRelease
+[       OK ] NotificationTest.StudentLearnsNothingBeforeRelease (31 ms)
+[ RUN      ] NotificationTest.StudentIsToldAboutExtension
+[       OK ] NotificationTest.StudentIsToldAboutExtension (25 ms)
+[ RUN      ] NotificationTest.MarkAllReadClearsUnreadButKeepsHistory
+[       OK ] NotificationTest.MarkAllReadClearsUnreadButKeepsHistory (26 ms)
+[----------] 6 tests from NotificationTest (170 ms total)
+
+[----------] 11 tests from ModerationTest
+[ RUN      ] ModerationTest.QueueShowsOnlyMarkedWorkOfOwnDepartment
+[       OK ] ModerationTest.QueueShowsOnlyMarkedWorkOfOwnDepartment (32 ms)
+[ RUN      ] ModerationTest.ApproveMovesToModeratedAndAudits
+[       OK ] ModerationTest.ApproveMovesToModeratedAndAudits (29 ms)
+[ RUN      ] ModerationTest.ApproveRequiresMarkedState
+[       OK ] ModerationTest.ApproveRequiresMarkedState (28 ms)
+[ RUN      ] ModerationTest.AdjustChangesMarkWithMandatoryReason
+[       OK ] ModerationTest.AdjustChangesMarkWithMandatoryReason (25 ms)
+[ RUN      ] ModerationTest.OtherDepartmentAndOtherRolesCannotModerate
+[       OK ] ModerationTest.OtherDepartmentAndOtherRolesCannotModerate (32 ms)
+[ RUN      ] ModerationTest.ReleasePublishesOnlyModeratedMarks
+[       OK ] ModerationTest.ReleasePublishesOnlyModeratedMarks (32 ms)
+[ RUN      ] ModerationTest.ReleaseCountsUnmarkedWork
+[       OK ] ModerationTest.ReleaseCountsUnmarkedWork (23 ms)
+[ RUN      ] ModerationTest.ReleasedMarksAreFinal
+[       OK ] ModerationTest.ReleasedMarksAreFinal (36 ms)
+[ RUN      ] ModerationTest.AuditTrailRecordsWhoWhenOldNewWhy
+[       OK ] ModerationTest.AuditTrailRecordsWhoWhenOldNewWhy (34 ms)
+[ RUN      ] ModerationTest.AuditLogScope
+[       OK ] ModerationTest.AuditLogScope (26 ms)
+[ RUN      ] ModerationTest.AdministratorCanInspectAnySubmissionTrail
+[       OK ] ModerationTest.AdministratorCanInspectAnySubmissionTrail (26 ms)
+[----------] 11 tests from ModerationTest (329 ms total)
+
+[----------] 8 tests from MarkingTest
+[ RUN      ] MarkingTest.OnTimeWorkKeepsRawMarkAndIsAudited
+[       OK ] MarkingTest.OnTimeWorkKeepsRawMarkAndIsAudited (27 ms)
+[ RUN      ] MarkingTest.VeryLateWorkScoresZeroButKeepsFeedback
+[       OK ] MarkingTest.VeryLateWorkScoresZeroButKeepsFeedback (25 ms)
+[ RUN      ] MarkingTest.ExtensionGrantedAfterLateSubmissionRemovesPenalty
+[       OK ] MarkingTest.ExtensionGrantedAfterLateSubmissionRemovesPenalty (23 ms)
+[ RUN      ] MarkingTest.ValidatesMarkRangeAndFeedback
+[       OK ] MarkingTest.ValidatesMarkRangeAndFeedback (35 ms)
+[ RUN      ] MarkingTest.RemarkRequiresReasonAndIsAudited
+[       OK ] MarkingTest.RemarkRequiresReasonAndIsAudited (31 ms)
+[ RUN      ] MarkingTest.OnlyTheCoursesLecturerMarks
+[       OK ] MarkingTest.OnlyTheCoursesLecturerMarks (32 ms)
+[ RUN      ] MarkingTest.LecturerCannotChangeModeratedMark
+[       OK ] MarkingTest.LecturerCannotChangeModeratedMark (24 ms)
+[ RUN      ] MarkingTest.ListsSubmissionsWithStudentNames
+[       OK ] MarkingTest.ListsSubmissionsWithStudentNames (24 ms)
+[----------] 8 tests from MarkingTest (226 ms total)
+
+[----------] 1 test from IT_MRK
+[ RUN      ] IT_MRK.PenaltyStrategyIsInjectable
+[       OK ] IT_MRK.PenaltyStrategyIsInjectable (29 ms)
+[----------] 1 test from IT_MRK (29 ms total)
+
+[----------] 15 tests from SubmissionTest
+[ RUN      ] SubmissionTest.MainFlowOnTimeSubmission
+[       OK ] SubmissionTest.MainFlowOnTimeSubmission (16 ms)
+[ RUN      ] SubmissionTest.SubmissionExactlyAtDeadlineIsOnTime
+[       OK ] SubmissionTest.SubmissionExactlyAtDeadlineIsOnTime (17 ms)
+[ RUN      ] SubmissionTest.AlternativeFlowResubmitBeforeDeadline
+[       OK ] SubmissionTest.AlternativeFlowResubmitBeforeDeadline (26 ms)
+[ RUN      ] SubmissionTest.AlternativeFlowLateSubmissionIsAcceptedNotRejected
+[       OK ] SubmissionTest.AlternativeFlowLateSubmissionIsAcceptedNotRejected (75 ms)
+[ RUN      ] SubmissionTest.LateWorkIsAcceptedEvenWeeksAfterDeadline
+[       OK ] SubmissionTest.LateWorkIsAcceptedEvenWeeksAfterDeadline (53 ms)
+[ RUN      ] SubmissionTest.ExceptionFlowResubmitAfterDeadlineKeepsOriginal
+[       OK ] SubmissionTest.ExceptionFlowResubmitAfterDeadlineKeepsOriginal (35 ms)
+[ RUN      ] SubmissionTest.LateSubmissionCannotBeResubmitted
+[       OK ] SubmissionTest.LateSubmissionCannotBeResubmitted (31 ms)
+[ RUN      ] SubmissionTest.ExtensionAllowsSubmitAndResubmitAfterOriginalDeadline
+[       OK ] SubmissionTest.ExtensionAllowsSubmitAndResubmitAfterOriginalDeadline (38 ms)
+[ RUN      ] SubmissionTest.ExceptionFlowNotEnrolled
+[       OK ] SubmissionTest.ExceptionFlowNotEnrolled (23 ms)
+[ RUN      ] SubmissionTest.ExceptionFlowUnknownAssignment
+[       OK ] SubmissionTest.ExceptionFlowUnknownAssignment (21 ms)
+[ RUN      ] SubmissionTest.ExceptionFlowEmptyOrOversizedWork
+[       OK ] SubmissionTest.ExceptionFlowEmptyOrOversizedWork (29 ms)
+[ RUN      ] SubmissionTest.ExceptionFlowAlreadyMarked
+[       OK ] SubmissionTest.ExceptionFlowAlreadyMarked (30 ms)
+[ RUN      ] SubmissionTest.OnlyStudentsSubmit
+[       OK ] SubmissionTest.OnlyStudentsSubmit (19 ms)
+[ RUN      ] SubmissionTest.MarkIsHiddenUntilReleased
+[       OK ] SubmissionTest.MarkIsHiddenUntilReleased (32 ms)
+[ RUN      ] SubmissionTest.StudentsNeverSeeEachOthersWork
+[       OK ] SubmissionTest.StudentsNeverSeeEachOthersWork (18 ms)
+[----------] 15 tests from SubmissionTest (474 ms total)
+
+[----------] 10 tests from AssignmentTest
+[ RUN      ] AssignmentTest.LecturerCreatesAssignmentForOwnCourse
+[       OK ] AssignmentTest.LecturerCreatesAssignmentForOwnCourse (29 ms)
+[ RUN      ] AssignmentTest.OnlyTheCoursesLecturerMayCreate
+[       OK ] AssignmentTest.OnlyTheCoursesLecturerMayCreate (20 ms)
+[ RUN      ] AssignmentTest.ValidatesDeadlineMaxMarkAndTitle
+[       OK ] AssignmentTest.ValidatesDeadlineMaxMarkAndTitle (29 ms)
+[ RUN      ] AssignmentTest.ExtensionMovesThatStudentsDeadlineOnly
+[       OK ] AssignmentTest.ExtensionMovesThatStudentsDeadlineOnly (24 ms)
+[ RUN      ] AssignmentTest.RegrantingReplacesTheExtension
+[       OK ] AssignmentTest.RegrantingReplacesTheExtension (28 ms)
+[ RUN      ] AssignmentTest.ExtensionRules
+[       OK ] AssignmentTest.ExtensionRules (21 ms)
+[ RUN      ] AssignmentTest.ExtensionReclassifiesUnmarkedLateSubmission
+[       OK ] AssignmentTest.ExtensionReclassifiesUnmarkedLateSubmission (27 ms)
+[ RUN      ] AssignmentTest.ExtensionShorterThanLatenessKeepsLateStatus
+[       OK ] AssignmentTest.ExtensionShorterThanLatenessKeepsLateStatus (22 ms)
+[ RUN      ] AssignmentTest.NoExtensionAfterModeration
+[       OK ] AssignmentTest.NoExtensionAfterModeration (25 ms)
+[ RUN      ] AssignmentTest.StudentsSeeOnlyEnrolledCourses
+[       OK ] AssignmentTest.StudentsSeeOnlyEnrolledCourses (24 ms)
+[----------] 10 tests from AssignmentTest (256 ms total)
+
+[----------] 11 tests from AdminTest
+[ RUN      ] AdminTest.BootstrapOnlyAllowedOnce
+[       OK ] AdminTest.BootstrapOnlyAllowedOnce (17 ms)
+[ RUN      ] AdminTest.OnlyAdministratorsManageAccounts
+[       OK ] AdminTest.OnlyAdministratorsManageAccounts (23 ms)
+[ RUN      ] AdminTest.CreatesUsersOfEveryRole
+[       OK ] AdminTest.CreatesUsersOfEveryRole (30 ms)
+[ RUN      ] AdminTest.RejectsInvalidAccounts
+[       OK ] AdminTest.RejectsInvalidAccounts (24 ms)
+[ RUN      ] AdminTest.CannotDeactivateOwnAccount
+[       OK ] AdminTest.CannotDeactivateOwnAccount (24 ms)
+[ RUN      ] AdminTest.ReactivatingHodBlockedWhenDepartmentHasAnother
+[       OK ] AdminTest.ReactivatingHodBlockedWhenDepartmentHasAnother (24 ms)
+[ RUN      ] AdminTest.ListUsersHidesPasswordHashes
+[       OK ] AdminTest.ListUsersHidesPasswordHashes (20 ms)
+[ RUN      ] AdminTest.DepartmentAndCourseNamesAreUnique
+[       OK ] AdminTest.DepartmentAndCourseNamesAreUnique (24 ms)
+[ RUN      ] AdminTest.LecturerOnlyTeachesOwnDepartment
+[       OK ] AdminTest.LecturerOnlyTeachesOwnDepartment (29 ms)
+[ RUN      ] AdminTest.EnrolOnlyActiveStudentsAndIsIdempotent
+[       OK ] AdminTest.EnrolOnlyActiveStudentsAndIsIdempotent (17 ms)
+[ RUN      ] AdminTest.DirectoryLooksUpNamesWithoutSecrets
+[       OK ] AdminTest.DirectoryLooksUpNamesWithoutSecrets (25 ms)
+[----------] 11 tests from AdminTest (262 ms total)
+
+[----------] 11 tests from AuthTest
+[ RUN      ] AuthTest.LoginReturnsPolymorphicUserForEachRole
+[       OK ] AuthTest.LoginReturnsPolymorphicUserForEachRole (18 ms)
+[ RUN      ] AuthTest.UsernameIsCaseInsensitiveAndTrimmed
+[       OK ] AuthTest.UsernameIsCaseInsensitiveAndTrimmed (22 ms)
+[ RUN      ] AuthTest.WrongPasswordAndUnknownUserGiveSameMessage
+[       OK ] AuthTest.WrongPasswordAndUnknownUserGiveSameMessage (20 ms)
+[ RUN      ] AuthTest.EmptyCredentialsRejected
+[       OK ] AuthTest.EmptyCredentialsRejected (27 ms)
+[ RUN      ] AuthTest.PasswordsAreStoredAsSaltedArgon2idHashes
+[       OK ] AuthTest.PasswordsAreStoredAsSaltedArgon2idHashes (25 ms)
+[ RUN      ] AuthTest.InactiveAccountCannotLogIn
+[       OK ] AuthTest.InactiveAccountCannotLogIn (22 ms)
+[ RUN      ] AuthTest.FiveFailuresLockAccountForFifteenMinutes
+[       OK ] AuthTest.FiveFailuresLockAccountForFifteenMinutes (25 ms)
+[ RUN      ] AuthTest.FourFailuresDoNotLockAndSuccessResetsCounter
+[       OK ] AuthTest.FourFailuresDoNotLockAndSuccessResetsCounter (24 ms)
+[ RUN      ] AuthTest.AdministratorResetUnlocksAccount
+[       OK ] AuthTest.AdministratorResetUnlocksAccount (35 ms)
+[ RUN      ] AuthTest.UnknownUserCostsTheSameHashVerificationAsKnownUser
+[       OK ] AuthTest.UnknownUserCostsTheSameHashVerificationAsKnownUser (20 ms)
+[ RUN      ] AuthTest.ChangePasswordRequiresCurrentPasswordAndPolicy
+[       OK ] AuthTest.ChangePasswordRequiresCurrentPasswordAndPolicy (28 ms)
+[----------] 11 tests from AuthTest (272 ms total)
+
+[----------] 13 tests from IT_DB
+[ RUN      ] IT_DB.MigrationCreatesLatestSchemaAndIsIdempotent
+[       OK ] IT_DB.MigrationCreatesLatestSchemaAndIsIdempotent (9 ms)
+[ RUN      ] IT_DB.RefusesDatabaseFromNewerRelease
+[       OK ] IT_DB.RefusesDatabaseFromNewerRelease (0 ms)
+[ RUN      ] IT_DB.ForeignKeysAreEnforced
+[       OK ] IT_DB.ForeignKeysAreEnforced (7 ms)
+[ RUN      ] IT_DB.InvalidSqlRaisesDatabaseError
+[       OK ] IT_DB.InvalidSqlRaisesDatabaseError (0 ms)
+[ RUN      ] IT_DB.AuditLogIsAppendOnly
+[       OK ] IT_DB.AuditLogIsAppendOnly (28 ms)
+[ RUN      ] IT_DB.SchemaRejectsPlainTextPasswords
+[       OK ] IT_DB.SchemaRejectsPlainTextPasswords (20 ms)
+[ RUN      ] IT_DB.SchemaAllowsOnlyOneActiveHeadPerDepartment
+[       OK ] IT_DB.SchemaAllowsOnlyOneActiveHeadPerDepartment (21 ms)
+[ RUN      ] IT_DB.ParameterisedQueriesNeutraliseSqlInjection
+[       OK ] IT_DB.ParameterisedQueriesNeutraliseSqlInjection (17 ms)
+[ RUN      ] IT_DB.TransactionRollsBackOnException
+[       OK ] IT_DB.TransactionRollsBackOnException (26 ms)
+[ RUN      ] IT_DB.NestedTransactionsRollBackOnlyInnerWork
+[       OK ] IT_DB.NestedTransactionsRollBackOnlyInnerWork (26 ms)
+[ RUN      ] IT_DB.DataPersistsAcrossRestarts
+[       OK ] IT_DB.DataPersistsAcrossRestarts (81 ms)
+[ RUN      ] IT_DB.OpeningAnInvalidPathFails
+[       OK ] IT_DB.OpeningAnInvalidPathFails (1 ms)
+[ RUN      ] IT_DB.RepositoriesReturnEmptyForUnknownIds
+[       OK ] IT_DB.RepositoriesReturnEmptyForUnknownIds (23 ms)
+[----------] 13 tests from IT_DB (267 ms total)
+
+[----------] 3 tests from UT_EVT
+[ RUN      ] UT_EVT.PublishesToEverySubscriber
+[       OK ] UT_EVT.PublishesToEverySubscriber (0 ms)
+[ RUN      ] UT_EVT.DuplicateSubscriptionIsIgnored
+[       OK ] UT_EVT.DuplicateSubscriptionIsIgnored (0 ms)
+[ RUN      ] UT_EVT.UnsubscribedObserverReceivesNothing
+[       OK ] UT_EVT.UnsubscribedObserverReceivesNothing (0 ms)
+[----------] 3 tests from UT_EVT (0 ms total)
+
+[----------] 6 tests from UT_TXT
+[ RUN      ] UT_TXT.TrimRemovesSurroundingWhitespace
+[       OK ] UT_TXT.TrimRemovesSurroundingWhitespace (0 ms)
+[ RUN      ] UT_TXT.RequireTextValidatesPresenceAndLength
+[       OK ] UT_TXT.RequireTextValidatesPresenceAndLength (0 ms)
+[ RUN      ] UT_TXT.FormatMarkDropsTrailingZeros
+[       OK ] UT_TXT.FormatMarkDropsTrailingZeros (0 ms)
+[ RUN      ] UT_TXT.ParseLocalAcceptsValidDates
+[       OK ] UT_TXT.ParseLocalAcceptsValidDates (0 ms)
+[ RUN      ] UT_TXT.ParseLocalRejectsInvalidDates
+[       OK ] UT_TXT.ParseLocalRejectsInvalidDates (0 ms)
+[ RUN      ] UT_TXT.DescribeDuration
+[       OK ] UT_TXT.DescribeDuration (0 ms)
+[----------] 6 tests from UT_TXT (0 ms total)
+
+[----------] 5 tests from HasherTest
+[ RUN      ] HasherTest.ProducesEncodedArgon2idHash
+[       OK ] HasherTest.ProducesEncodedArgon2idHash (0 ms)
+[ RUN      ] HasherTest.VerifiesCorrectPasswordOnly
+[       OK ] HasherTest.VerifiesCorrectPasswordOnly (0 ms)
+[ RUN      ] HasherTest.SaltMakesEveryHashUnique
+[       OK ] HasherTest.SaltMakesEveryHashUnique (0 ms)
+[ RUN      ] HasherTest.RejectsMalformedOrForeignHashes
+[       OK ] HasherTest.RejectsMalformedOrForeignHashes (0 ms)
+[ RUN      ] HasherTest.HashFromOtherParametersStillVerifies
+[       OK ] HasherTest.HashFromOtherParametersStillVerifies (1 ms)
+[----------] 5 tests from HasherTest (3 ms total)
+
+[----------] 5 tests from UT_SEC
+[ RUN      ] UT_SEC.ProductionParametersMeetOwaspMinimum
+[       OK ] UT_SEC.ProductionParametersMeetOwaspMinimum (0 ms)
+[ RUN      ] UT_SEC.InvalidParametersRejected
+[       OK ] UT_SEC.InvalidParametersRejected (0 ms)
+[ RUN      ] UT_SEC.SecureRandomBytesHaveRequestedLengthAndVary
+[       OK ] UT_SEC.SecureRandomBytesHaveRequestedLengthAndVary (0 ms)
+[ RUN      ] UT_SEC.PasswordLengthUpperBoundary
+[       OK ] UT_SEC.PasswordLengthUpperBoundary (0 ms)
+[ RUN      ] UT_SEC.PasswordMustDifferFromUsername
+[       OK ] UT_SEC.PasswordMustDifferFromUsername (0 ms)
+[----------] 5 tests from UT_SEC (0 ms total)
+
+[----------] 4 tests from UT_LIF
+[ RUN      ] UT_LIF.OnlyUnmoderatedWorkIsMarkable
+[       OK ] UT_LIF.OnlyUnmoderatedWorkIsMarkable (0 ms)
+[ RUN      ] UT_LIF.OnlyReleasedMarksAreVisibleToStudents
+[       OK ] UT_LIF.OnlyReleasedMarksAreVisibleToStudents (0 ms)
+[ RUN      ] UT_LIF.StatusCodesRoundTrip
+[       OK ] UT_LIF.StatusCodesRoundTrip (0 ms)
+[ RUN      ] UT_LIF.AuditActionCodesRoundTrip
+[       OK ] UT_LIF.AuditActionCodesRoundTrip (0 ms)
+[----------] 4 tests from UT_LIF (0 ms total)
+
+[----------] 7 tests from UT_USR
+[ RUN      ] UT_USR.FactoryCreatesConcreteClassForEachRole
+[       OK ] UT_USR.FactoryCreatesConcreteClassForEachRole (0 ms)
+[ RUN      ] UT_USR.FactoryCopiesIdentity
+[       OK ] UT_USR.FactoryCopiesIdentity (0 ms)
+[ RUN      ] UT_USR.FactoryRejectsStaffWithoutDepartment
+[       OK ] UT_USR.FactoryRejectsStaffWithoutDepartment (0 ms)
+[ RUN      ] UT_USR.AuthorizationMessageNamesRoleAndAction
+[       OK ] UT_USR.AuthorizationMessageNamesRoleAndAction (0 ms)
+[ RUN      ] UT_USR.DepartmentScopeIsPolymorphic
+[       OK ] UT_USR.DepartmentScopeIsPolymorphic (0 ms)
+[ RUN      ] UT_USR.AdministratorHasNoDepartment
+[       OK ] UT_USR.AdministratorHasNoDepartment (0 ms)
+[ RUN      ] UT_USR.RoleCodesRoundTrip
+[       OK ] UT_USR.RoleCodesRoundTrip (0 ms)
+[----------] 7 tests from UT_USR (0 ms total)
+
+[----------] 9 tests from UT_PEN
+[ RUN      ] UT_PEN.RejectsMarkAboveMaximum
+[       OK ] UT_PEN.RejectsMarkAboveMaximum (0 ms)
+[ RUN      ] UT_PEN.RejectsNegativeMark
+[       OK ] UT_PEN.RejectsNegativeMark (0 ms)
+[ RUN      ] UT_PEN.RejectsNaNMark
+[       OK ] UT_PEN.RejectsNaNMark (0 ms)
+[ RUN      ] UT_PEN.RejectsNegativeDaysAndNonPositiveMaximum
+[       OK ] UT_PEN.RejectsNegativeDaysAndNonPositiveMaximum (0 ms)
+[ RUN      ] UT_PEN.RejectsInvalidConfiguration
+[       OK ] UT_PEN.RejectsInvalidConfiguration (0 ms)
+[ RUN      ] UT_PEN.ConfigurableRateAndCap
+[       OK ] UT_PEN.ConfigurableRateAndCap (0 ms)
+[ RUN      ] UT_PEN.DescriptionStatesTheRule
+[       OK ] UT_PEN.DescriptionStatesTheRule (0 ms)
+[ RUN      ] UT_PEN.NoPenaltyPolicyKeepsRawMark
+[       OK ] UT_PEN.NoPenaltyPolicyKeepsRawMark (0 ms)
+[ RUN      ] UT_PEN.PolicyIsSubstitutableThroughInterface
+[       OK ] UT_PEN.PolicyIsSubstitutableThroughInterface (0 ms)
+[----------] 9 tests from UT_PEN (0 ms total)
+
+[----------] 6 tests from IT_MRK/LateMarking
+[ RUN      ] IT_MRK/LateMarking.PenaltyAppliedFromSubmissionTime/0
+[       OK ] IT_MRK/LateMarking.PenaltyAppliedFromSubmissionTime/0 (30 ms)
+[ RUN      ] IT_MRK/LateMarking.PenaltyAppliedFromSubmissionTime/1
+[       OK ] IT_MRK/LateMarking.PenaltyAppliedFromSubmissionTime/1 (31 ms)
+[ RUN      ] IT_MRK/LateMarking.PenaltyAppliedFromSubmissionTime/2
+[       OK ] IT_MRK/LateMarking.PenaltyAppliedFromSubmissionTime/2 (24 ms)
+[ RUN      ] IT_MRK/LateMarking.PenaltyAppliedFromSubmissionTime/3
+[       OK ] IT_MRK/LateMarking.PenaltyAppliedFromSubmissionTime/3 (29 ms)
+[ RUN      ] IT_MRK/LateMarking.PenaltyAppliedFromSubmissionTime/4
+[       OK ] IT_MRK/LateMarking.PenaltyAppliedFromSubmissionTime/4 (22 ms)
+[ RUN      ] IT_MRK/LateMarking.PenaltyAppliedFromSubmissionTime/5
+[       OK ] IT_MRK/LateMarking.PenaltyAppliedFromSubmissionTime/5 (28 ms)
+[----------] 6 tests from IT_MRK/LateMarking (167 ms total)
+
+[----------] 6 tests from UT_SEC/PasswordPolicyCases
+[ RUN      ] UT_SEC/PasswordPolicyCases.EnforcesRules/0
+[       OK ] UT_SEC/PasswordPolicyCases.EnforcesRules/0 (0 ms)
+[ RUN      ] UT_SEC/PasswordPolicyCases.EnforcesRules/1
+[       OK ] UT_SEC/PasswordPolicyCases.EnforcesRules/1 (0 ms)
+[ RUN      ] UT_SEC/PasswordPolicyCases.EnforcesRules/2
+[       OK ] UT_SEC/PasswordPolicyCases.EnforcesRules/2 (0 ms)
+[ RUN      ] UT_SEC/PasswordPolicyCases.EnforcesRules/3
+[       OK ] UT_SEC/PasswordPolicyCases.EnforcesRules/3 (0 ms)
+[ RUN      ] UT_SEC/PasswordPolicyCases.EnforcesRules/4
+[       OK ] UT_SEC/PasswordPolicyCases.EnforcesRules/4 (0 ms)
+[ RUN      ] UT_SEC/PasswordPolicyCases.EnforcesRules/5
+[       OK ] UT_SEC/PasswordPolicyCases.EnforcesRules/5 (0 ms)
+[----------] 6 tests from UT_SEC/PasswordPolicyCases (0 ms total)
+
+[----------] 25 tests from UT_LIF/TransitionTable
+[ RUN      ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/0
+[       OK ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/0 (0 ms)
+[ RUN      ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/1
+[       OK ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/1 (0 ms)
+[ RUN      ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/2
+[       OK ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/2 (0 ms)
+[ RUN      ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/3
+[       OK ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/3 (0 ms)
+[ RUN      ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/4
+[       OK ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/4 (0 ms)
+[ RUN      ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/5
+[       OK ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/5 (0 ms)
+[ RUN      ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/6
+[       OK ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/6 (0 ms)
+[ RUN      ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/7
+[       OK ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/7 (0 ms)
+[ RUN      ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/8
+[       OK ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/8 (0 ms)
+[ RUN      ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/9
+[       OK ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/9 (0 ms)
+[ RUN      ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/10
+[       OK ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/10 (0 ms)
+[ RUN      ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/11
+[       OK ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/11 (0 ms)
+[ RUN      ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/12
+[       OK ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/12 (0 ms)
+[ RUN      ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/13
+[       OK ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/13 (0 ms)
+[ RUN      ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/14
+[       OK ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/14 (0 ms)
+[ RUN      ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/15
+[       OK ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/15 (0 ms)
+[ RUN      ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/16
+[       OK ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/16 (0 ms)
+[ RUN      ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/17
+[       OK ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/17 (0 ms)
+[ RUN      ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/18
+[       OK ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/18 (0 ms)
+[ RUN      ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/19
+[       OK ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/19 (0 ms)
+[ RUN      ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/20
+[       OK ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/20 (0 ms)
+[ RUN      ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/21
+[       OK ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/21 (0 ms)
+[ RUN      ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/22
+[       OK ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/22 (0 ms)
+[ RUN      ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/23
+[       OK ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/23 (0 ms)
+[ RUN      ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/24
+[       OK ] UT_LIF/TransitionTable.MatchesStateMachineDiagram/24 (0 ms)
+[----------] 25 tests from UT_LIF/TransitionTable (1 ms total)
+
+[----------] 52 tests from UT_USR/PermissionMatrix
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/0
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/0 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/1
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/1 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/2
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/2 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/3
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/3 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/4
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/4 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/5
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/5 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/6
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/6 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/7
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/7 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/8
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/8 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/9
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/9 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/10
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/10 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/11
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/11 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/12
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/12 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/13
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/13 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/14
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/14 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/15
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/15 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/16
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/16 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/17
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/17 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/18
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/18 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/19
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/19 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/20
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/20 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/21
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/21 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/22
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/22 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/23
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/23 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/24
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/24 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/25
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/25 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/26
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/26 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/27
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/27 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/28
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/28 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/29
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/29 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/30
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/30 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/31
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/31 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/32
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/32 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/33
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/33 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/34
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/34 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/35
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/35 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/36
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/36 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/37
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/37 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/38
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/38 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/39
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/39 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/40
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/40 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/41
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/41 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/42
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/42 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/43
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/43 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/44
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/44 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/45
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/45 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/46
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/46 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/47
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/47 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/48
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/48 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/49
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/49 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/50
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/50 (0 ms)
+[ RUN      ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/51
+[       OK ] UT_USR/PermissionMatrix.RoleGrantsExactlyTheSpecifiedPermissions/51 (0 ms)
+[----------] 52 tests from UT_USR/PermissionMatrix (3 ms total)
+
+[----------] 11 tests from UT_PEN/TenPercentPolicy
+[ RUN      ] UT_PEN/TenPercentPolicy.AppliesTenPercentOfMaximumPerDay/0
+[       OK ] UT_PEN/TenPercentPolicy.AppliesTenPercentOfMaximumPerDay/0 (0 ms)
+[ RUN      ] UT_PEN/TenPercentPolicy.AppliesTenPercentOfMaximumPerDay/1
+[       OK ] UT_PEN/TenPercentPolicy.AppliesTenPercentOfMaximumPerDay/1 (0 ms)
+[ RUN      ] UT_PEN/TenPercentPolicy.AppliesTenPercentOfMaximumPerDay/2
+[       OK ] UT_PEN/TenPercentPolicy.AppliesTenPercentOfMaximumPerDay/2 (0 ms)
+[ RUN      ] UT_PEN/TenPercentPolicy.AppliesTenPercentOfMaximumPerDay/3
+[       OK ] UT_PEN/TenPercentPolicy.AppliesTenPercentOfMaximumPerDay/3 (0 ms)
+[ RUN      ] UT_PEN/TenPercentPolicy.AppliesTenPercentOfMaximumPerDay/4
+[       OK ] UT_PEN/TenPercentPolicy.AppliesTenPercentOfMaximumPerDay/4 (0 ms)
+[ RUN      ] UT_PEN/TenPercentPolicy.AppliesTenPercentOfMaximumPerDay/5
+[       OK ] UT_PEN/TenPercentPolicy.AppliesTenPercentOfMaximumPerDay/5 (0 ms)
+[ RUN      ] UT_PEN/TenPercentPolicy.AppliesTenPercentOfMaximumPerDay/6
+[       OK ] UT_PEN/TenPercentPolicy.AppliesTenPercentOfMaximumPerDay/6 (0 ms)
+[ RUN      ] UT_PEN/TenPercentPolicy.AppliesTenPercentOfMaximumPerDay/7
+[       OK ] UT_PEN/TenPercentPolicy.AppliesTenPercentOfMaximumPerDay/7 (0 ms)
+[ RUN      ] UT_PEN/TenPercentPolicy.AppliesTenPercentOfMaximumPerDay/8
+[       OK ] UT_PEN/TenPercentPolicy.AppliesTenPercentOfMaximumPerDay/8 (0 ms)
+[ RUN      ] UT_PEN/TenPercentPolicy.AppliesTenPercentOfMaximumPerDay/9
+[       OK ] UT_PEN/TenPercentPolicy.AppliesTenPercentOfMaximumPerDay/9 (0 ms)
+[ RUN      ] UT_PEN/TenPercentPolicy.AppliesTenPercentOfMaximumPerDay/10
+[       OK ] UT_PEN/TenPercentPolicy.AppliesTenPercentOfMaximumPerDay/10 (0 ms)
+[----------] 11 tests from UT_PEN/TenPercentPolicy (0 ms total)
+
+[----------] 12 tests from UT_LAT/LatenessBoundaries
+[ RUN      ] UT_LAT/LatenessBoundaries.DaysLateMatchesSpecification/one_week_early
+[       OK ] UT_LAT/LatenessBoundaries.DaysLateMatchesSpecification/one_week_early (0 ms)
+[ RUN      ] UT_LAT/LatenessBoundaries.DaysLateMatchesSpecification/one_second_early
+[       OK ] UT_LAT/LatenessBoundaries.DaysLateMatchesSpecification/one_second_early (0 ms)
+[ RUN      ] UT_LAT/LatenessBoundaries.DaysLateMatchesSpecification/exactly_at_deadline
+[       OK ] UT_LAT/LatenessBoundaries.DaysLateMatchesSpecification/exactly_at_deadline (0 ms)
+[ RUN      ] UT_LAT/LatenessBoundaries.DaysLateMatchesSpecification/one_second_late
+[       OK ] UT_LAT/LatenessBoundaries.DaysLateMatchesSpecification/one_second_late (0 ms)
+[ RUN      ] UT_LAT/LatenessBoundaries.DaysLateMatchesSpecification/one_hour_late
+[       OK ] UT_LAT/LatenessBoundaries.DaysLateMatchesSpecification/one_hour_late (0 ms)
+[ RUN      ] UT_LAT/LatenessBoundaries.DaysLateMatchesSpecification/exactly_24h_late
+[       OK ] UT_LAT/LatenessBoundaries.DaysLateMatchesSpecification/exactly_24h_late (0 ms)
+[ RUN      ] UT_LAT/LatenessBoundaries.DaysLateMatchesSpecification/24h___1s_late
+[       OK ] UT_LAT/LatenessBoundaries.DaysLateMatchesSpecification/24h___1s_late (0 ms)
+[ RUN      ] UT_LAT/LatenessBoundaries.DaysLateMatchesSpecification/48h_late
+[       OK ] UT_LAT/LatenessBoundaries.DaysLateMatchesSpecification/48h_late (0 ms)
+[ RUN      ] UT_LAT/LatenessBoundaries.DaysLateMatchesSpecification/48h___1s_late
+[       OK ] UT_LAT/LatenessBoundaries.DaysLateMatchesSpecification/48h___1s_late (0 ms)
+[ RUN      ] UT_LAT/LatenessBoundaries.DaysLateMatchesSpecification/exactly_72h_late
+[       OK ] UT_LAT/LatenessBoundaries.DaysLateMatchesSpecification/exactly_72h_late (0 ms)
+[ RUN      ] UT_LAT/LatenessBoundaries.DaysLateMatchesSpecification/72h___1s_late
+[       OK ] UT_LAT/LatenessBoundaries.DaysLateMatchesSpecification/72h___1s_late (0 ms)
+[ RUN      ] UT_LAT/LatenessBoundaries.DaysLateMatchesSpecification/30_days_late
+[       OK ] UT_LAT/LatenessBoundaries.DaysLateMatchesSpecification/30_days_late (0 ms)
+[----------] 12 tests from UT_LAT/LatenessBoundaries (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 264 tests from 25 test suites ran. (3317 ms total)
+[  PASSED  ] 264 tests.

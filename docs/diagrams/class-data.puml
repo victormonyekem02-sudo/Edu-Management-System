@@ -1,0 +1,89 @@
+@startuml class-data
+!pragma layout smetana
+title Class Diagram (3/3) - Repository/DAO data access and security
+skinparam classAttributeIconSize 0
+skinparam class {
+  BackgroundColor #FBFCFF
+  BorderColor #1F3864
+}
+left to right direction
+hide empty members
+
+class UserRecord <<struct>>
+class Submission <<struct>>
+class Assignment <<struct>>
+class MarkAuditEntry <<struct>>
+package "security" {
+  interface IPasswordHasher {
+    + {abstract} hash(password : string) : string
+    + {abstract} verify(password : string, encodedHash : string) : bool
+  }
+  class Argon2idPasswordHasher {
+    - params_ : Argon2Params
+    + hash(password : string) : string
+    + verify(password : string, encodedHash : string) : bool
+  }
+  class PasswordPolicy {
+    + {static} validate(password : string, username : string) : void
+  }
+  IPasswordHasher <|.. Argon2idPasswordHasher
+}
+
+package "data  <<Repository / DAO>>" {
+  interface IUserRepository {
+    + add(u : const UserRecord&) : int
+    + update(u : const UserRecord&) : void
+    + findById(id : int) : optional<UserRecord>
+    + findByUsername(name : string) : optional<UserRecord>
+    + findHeadOfDepartment(departmentId : int) : optional<UserRecord>
+    + listByRole(r : Role) : vector<UserRecord>
+    + countByRole(r : Role) : int
+  }
+  interface ICourseRepository
+  interface IAssignmentRepository {
+    + add(a : const Assignment&) : int
+    + findById(id : int) : optional<Assignment>
+    + listByCourse(courseId : int) : vector<Assignment>
+    + saveExtension(e : const Extension&) : void
+    + findExtension(assignmentId : int, studentId : int) : optional<Extension>
+  }
+  interface ISubmissionRepository {
+    + add(s : const Submission&) : int
+    + update(s : const Submission&) : void
+    + find(assignmentId : int, studentId : int) : optional<Submission>
+    + listByDepartmentAndStatus(dept : int, s : SubmissionStatus) : vector<Submission>
+    + addVersion(id : int, version : int, content : string, at : Timestamp) : void
+  }
+  interface IAuditRepository {
+    + add(e : const MarkAuditEntry&) : int
+    + listForSubmission(id : int) : vector<MarkAuditEntry>
+  }
+  interface IDepartmentRepository
+  interface INotificationRepository
+  interface ITransactionRunner {
+    + run(work : function<void()>) : void
+  }
+  class SqliteUserRepository
+  class SqliteSubmissionRepository
+  class "Sqlite*Repository (5 more)" as SqliteOthers
+  class Database {
+    - db_ : sqlite3*
+    + prepare(sql : string) : Statement
+    + execute(sql : string) : void
+    + inTransaction(work : function<void()>) : void
+  }
+  IUserRepository <|.. SqliteUserRepository
+  ISubmissionRepository <|.. SqliteSubmissionRepository
+  IAssignmentRepository <|.. SqliteOthers
+  ICourseRepository <|.. SqliteOthers
+  IAuditRepository <|.. SqliteOthers
+  SqliteUserRepository --> Database
+  SqliteSubmissionRepository --> Database
+  SqliteOthers --> Database
+}
+
+IUserRepository ..> UserRecord
+ISubmissionRepository ..> Submission
+IAssignmentRepository ..> Assignment
+IAuditRepository ..> MarkAuditEntry
+@enduml

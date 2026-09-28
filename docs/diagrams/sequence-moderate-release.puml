@@ -1,0 +1,72 @@
+@startuml sequence-moderate-release
+title Sequence Diagram - UC-03 Moderate and release marks
+autonumber
+actor "Head of Department" as HoD
+participant ":HodMenu" as UI
+participant ":ModerationService" as MS
+participant ":ISubmissionRepository" as SR
+participant ":IAssignmentRepository" as AR
+participant ":ICourseRepository" as CR
+participant ":IAuditRepository" as AU
+participant ":ITransactionRunner" as TX
+participant ":SubmissionEventPublisher" as EP
+participant ":NotificationService" as NS
+
+HoD -> UI : "Marks awaiting moderation"
+UI -> MS : pendingModeration(hod)
+MS -> MS : hod.require(ModerateMarks)
+MS -> SR : listByDepartmentAndStatus(hod.departmentId, MARKED)
+SR --> MS : submissions
+MS --> UI : ModerationItems (raw, late deduction, final, marker)
+UI --> HoD : table
+
+loop for each mark to moderate
+  alt mark is appropriate
+    HoD -> UI : approve(submissionId, note)
+    UI -> MS : approve(hod, submissionId, note)
+    MS -> SR : findById(submissionId)
+    MS -> AR : findById(assignmentId)
+    MS -> CR : findById(courseId)
+    MS -> MS : hod.hasDepartmentScope(course.departmentId)?
+    MS -> MS : SubmissionLifecycle.requireTransition(MARKED, MODERATED)
+    MS -> TX : run(work)
+    activate TX
+    TX -> SR : update(status = MODERATED, moderatedBy, moderatedAt)
+    TX -> AU : add(MODERATION_APPROVE, old = new = final, reason)
+    deactivate TX
+  else mark must change
+    HoD -> UI : adjust(submissionId, newMark, reason)
+    UI -> MS : adjust(hod, submissionId, newMark, reason)
+    MS -> MS : validate 0 <= newMark <= maxMark, reason not empty
+    MS -> TX : run(work)
+    activate TX
+    TX -> SR : update(finalMark = newMark, status = MODERATED)
+    TX -> AU : add(MODERATION_ADJUST, old, new, reason)
+    deactivate TX
+  end
+  MS -> EP : publish(Moderated)
+  EP -> NS : onSubmissionEvent(Moderated)
+  note right of NS : no message to the student\nbefore release (BR-07)
+end
+
+HoD -> UI : "Release moderated marks", assignmentId, confirm y
+UI -> MS : releaseAssignment(hod, assignmentId)
+MS -> MS : hod.require(ReleaseMarks), department scope check
+MS -> SR : listByAssignment(assignmentId)
+SR --> MS : submissions
+MS -> MS : split into MODERATED / MARKED / unmarked
+MS -> TX : run(work)
+activate TX
+loop each MODERATED submission
+  TX -> SR : update(status = RELEASED, releasedBy, releasedAt)
+  TX -> AU : add(RELEASE, old = new = final)
+end
+deactivate TX
+loop each released submission
+  MS -> EP : publish(Released)
+  EP -> NS : onSubmissionEvent(Released)
+  NS -> NS : notify student "mark and feedback released"
+end
+MS --> UI : ReleaseSummary{released, awaitingModeration, notYetMarked}
+UI --> HoD : "n mark(s) released; m still hidden"
+@enduml
