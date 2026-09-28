@@ -1,0 +1,11 @@
+# Coding standard CS-F1: formatting is automatic (see docs/06-implementation/coding-standard.md).
+BasedOnStyle: Google
+IndentWidth: 4
+ColumnLimit: 100
+AccessModifierOffset: -4
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+DerivePointerAlignment: false
+PointerAlignment: Left
+IncludeBlocks: Regroup

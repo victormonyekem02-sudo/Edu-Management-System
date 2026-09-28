@@ -2,4 +2,23 @@ node_modules/
 .next/
 dist/
 build/
+build-*/
+out/
 *.log
+
+# CMake / IDE
+CMakeUserPresets.json
+.vs/
+.vscode/
+.idea/
+compile_commands.json
+
+# Runtime data - never commit a real school database
+*.db
+*.db-wal
+*.db-shm
+
+# Coverage artefacts (the published report lives in docs/07-testing/reports)
+*.gcda
+*.gcno
+coverage/
