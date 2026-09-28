@@ -1,6 +1,6 @@
 # Software Requirements Specification (SRS)
 
-**System:** Moderated Learning Management System (LMS)
+**System:** Learning Management System (LMS)
 **Version:** 1.1 (baseline 1.0 approved at Gate 1; FR-22 added by change request CR1)
 **Structure:** adapted from ISO/IEC/IEEE 29148:2018, clause 9.6 (SRS content)
 

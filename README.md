@@ -1,4 +1,4 @@
-# Moderated Learning Management System
+# Learning Management System
 
 A C++17 console LMS for a secondary school, where every mark is moderated by the Head of Department before students see it. Built for the CS4433 Software Engineering final project (Waterfall process with V-Model verification).
 

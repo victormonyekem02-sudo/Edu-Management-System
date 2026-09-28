@@ -1,6 +1,6 @@
 @startuml component
 !pragma layout smetana
-title Moderated LMS - Component Diagram (layered architecture)
+title LMS - Component Diagram (layered architecture)
 skinparam componentStyle uml2
 skinparam component {
   BackgroundColor #F8FAFF

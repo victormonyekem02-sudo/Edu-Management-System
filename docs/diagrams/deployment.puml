@@ -1,6 +1,6 @@
 @startuml deployment
 !pragma layout smetana
-title Deployment Diagram - Moderated LMS v1.x (single school computer, offline)
+title Deployment Diagram - LMS v1.x (single school computer, offline)
 
 node "School computer\n<<device>>\nWindows 10/11 x64 (or Ubuntu 22.04+)\n>= 2 GB RAM, dual-core" as PC {
   node "Operating system\n<<execution environment>>" as OS {

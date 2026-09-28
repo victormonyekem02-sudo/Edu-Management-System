@@ -1,6 +1,6 @@
 # Project Management Plan
 
-**Project:** Moderated Learning Management System
+**Project:** Learning Management System
 **Process model:** Waterfall with V-Model verification and validation, three formal phase gates
 **Duration:** 7 weeks (Mon 21 Sep 2026 - Fri 6 Nov 2026; submission 7 Nov 2026)
 **Team:** one developer (the student), who also acts as tester, CM manager and technical writer; supervisor as reviewer at the gates.
