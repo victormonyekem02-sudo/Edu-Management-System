@@ -10,7 +10,7 @@ skinparam state {
 [*] --> Late : submit [now > effectiveDeadline]\n/ accept, flag LATE (BR-04)
 
 Submitted --> Submitted : resubmit [now <= effectiveDeadline]\n/ version++, keep history (BR-05)
-Late --> Submitted : grantExtension [submittedAt <= newDeadline]\n/ reclassify (BR-03)
+Late --> Submitted : grantExtension or grantClassExtension (v1.1)\n[submittedAt <= new effective deadline]\n/ reclassify (BR-03)
 
 Submitted --> Marked : mark(raw, feedback)\n/ penalty = 0, audit MARK
 Late --> Marked : mark(raw, feedback)\n/ apply late penalty (BR-01, BR-02), audit MARK

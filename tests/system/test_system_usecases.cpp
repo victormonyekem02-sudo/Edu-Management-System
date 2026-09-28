@@ -249,7 +249,9 @@ TEST_F(SystemTest, ST22_LecturerGrantsExtensionShownToStudent) {
     EXPECT_TRUE(has(lect.output, "[OK] Extension granted to Student One")) << lect.output;
     const RunResult stud = run(login("student") + "2\n" + kLogoutAndExit);
     EXPECT_TRUE(has(stud.output, "granted an extension")) << stud.output;
-    EXPECT_TRUE(has(stud.output, newDeadline + " (extended)")) << stud.output;
+    // v1.1 (CR1): the list shows the extension kind in its own column.
+    EXPECT_TRUE(has(stud.output, newDeadline)) << stud.output;
+    EXPECT_TRUE(has(stud.output, "individual")) << stud.output;
 }
 
 TEST_F(SystemTest, ST23_ChangePassword) {
@@ -269,6 +271,41 @@ TEST_F(SystemTest, ST24_AccountLocksAfterFiveFailures) {
     const RunResult r = run(script);
     EXPECT_TRUE(has(r.output, "temporarily locked")) << r.output;
     EXPECT_FALSE(has(r.output, "Student menu"));
+}
+
+// ---- Class-wide extension (CR1, release v1.1) -------------------------------------------
+
+TEST_F(SystemTest, ST28_LecturerExtendsDeadlineForWholeClass) {
+    const std::string original = time_util::formatLocal(school.deadline);
+    const std::string newDeadline = time_util::formatLocal(school.deadline + 2 * kSecondsPerDay);
+    const RunResult lect = run(login("lecturer") + "6\n1\n" + newDeadline +
+                               "\nSports day clash\n7\n1\n" + kLogoutAndExit);
+    EXPECT_TRUE(has(lect.output, "[OK] Deadline extended for the whole class until " + newDeadline))
+        << lect.output;
+    EXPECT_TRUE(has(lect.output, "Class extension: until " + newDeadline + " - Sports day clash"))
+        << lect.output;
+    for (const char* student : {"student", "student2"}) {
+        const RunResult s = run(login(student) + "2\n" + kLogoutAndExit);
+        EXPECT_TRUE(has(s.output, "extended for the whole class")) << s.output;
+        EXPECT_TRUE(has(s.output, original)) << s.output;
+        EXPECT_TRUE(has(s.output, newDeadline + "  class")) << s.output;
+    }
+}
+
+TEST_F(SystemTest, ST29_LaterIndividualExtensionShownAsIndividual) {
+    school.sys->assignments().grantClassExtension(*school.lecturer, school.assignment,
+                                                  school.deadline + kSecondsPerDay, "Class");
+    school.sys->assignments().grantExtension(*school.lecturer, school.assignment,
+                                             school.student->id(),
+                                             school.deadline + 3 * kSecondsPerDay, "Hospital");
+    const RunResult one = run(login("student") + "2\n" + kLogoutAndExit);
+    EXPECT_TRUE(has(one.output,
+                    time_util::formatLocal(school.deadline + 3 * kSecondsPerDay) + "  individual"))
+        << one.output;
+    const RunResult two = run(login("student2") + "2\n" + kLogoutAndExit);
+    EXPECT_TRUE(has(two.output,
+                    time_util::formatLocal(school.deadline + kSecondsPerDay) + "  class"))
+        << two.output;
 }
 
 // ---- File submission (review finding R3) -------------------------------------------------

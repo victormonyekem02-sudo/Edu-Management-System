@@ -25,7 +25,7 @@ build\app\Release\lms.exe            # Visual Studio generator
 ## Tests
 
 ```sh
-ctest --test-dir build -C Release -L functional --output-on-failure   # 264 unit/integration/system tests
+ctest --test-dir build -C Release -L functional --output-on-failure   # 278 unit/integration/system tests
 ctest --test-dir build -C Release -L performance -V                   # NFR-01..03 timings (use Release)
 ./build/tests/lms_tests --gtest_filter='SystemTest.*'                 # run a subset
 ```

@@ -13,7 +13,9 @@ namespace lms {
 /// shown at login (FR-19). Recipients:
 ///  - Submitted / Resubmitted -> lecturers of the course
 ///  - Marked                  -> Head of the course's department
-///  - Released, ExtensionGranted, Moderated -> the student (Moderated: no mark revealed)
+///  - Released, ExtensionGranted              -> the student
+///  - ClassExtensionGranted (v1.1)             -> every student enrolled on the course
+///  - Moderated                                -> nobody (nothing may be revealed before release)
 class NotificationService final : public ISubmissionObserver {
 public:
     NotificationService(Repositories repos, const IClock& clock);
@@ -31,6 +33,7 @@ private:
     void notifyHeadOfDepartment(const std::optional<Course>& course, const std::string& who,
                                 const std::string& what);
     void notifyExtension(const SubmissionEvent& event, const std::string& what);
+    void notifyClassExtension(const Assignment& assignment, const std::string& what);
 
     Repositories repos_;
     const IClock& clock_;

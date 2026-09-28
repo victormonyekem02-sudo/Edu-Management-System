@@ -1,0 +1,24 @@
+Running main() from <deps>/googletest-1.15.2/googletest/src/gtest_main.cc
+[==========] Running 5 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 5 tests from PerformanceTest
+[ RUN      ] PerformanceTest.NFR01_LoginCompletesWithinTwoSeconds
+[PERF] NFR-01 login: 58.6273 ms (limit 2000 ms)
+[       OK ] PerformanceTest.NFR01_LoginCompletesWithinTwoSeconds (59 ms)
+[ RUN      ] PerformanceTest.NFR02_AssignmentListWithinOneSecond
+[PERF] NFR-02 assignment list: 1.0599 ms (limit 1000 ms)
+[       OK ] PerformanceTest.NFR02_AssignmentListWithinOneSecond (1 ms)
+[ RUN      ] PerformanceTest.NFR02_SubmissionWithinOneSecond
+[PERF] NFR-02 submit: 0.4733 ms (limit 1000 ms)
+[       OK ] PerformanceTest.NFR02_SubmissionWithinOneSecond (0 ms)
+[ RUN      ] PerformanceTest.NFR03_ModerationQueueOf800WithinTwoSeconds
+[PERF] NFR-03 moderation queue (800 items): 37.5566 ms (limit 2000 ms)
+[       OK ] PerformanceTest.NFR03_ModerationQueueOf800WithinTwoSeconds (37 ms)
+[ RUN      ] PerformanceTest.NFR03_ReleaseOf800MarksWithinFiveSeconds
+[PERF] NFR-03 release 800 marks: 119.666 ms (limit 5000 ms)
+[       OK ] PerformanceTest.NFR03_ReleaseOf800MarksWithinFiveSeconds (349 ms)
+[----------] 5 tests from PerformanceTest (450 ms total)
+
+[----------] Global test environment tear-down
+[==========] 5 tests from 1 test suite ran. (1743 ms total)
+[  PASSED  ] 5 tests.

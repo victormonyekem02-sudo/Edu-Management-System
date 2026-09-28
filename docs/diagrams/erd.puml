@@ -1,6 +1,6 @@
 @startuml erd
 !pragma layout smetana
-title Entity-Relationship Diagram (3NF, schema version 1)
+title Entity-Relationship Diagram (3NF, schema version 2 - v1.1)
 hide circle
 skinparam linetype ortho
 skinparam class {
@@ -72,6 +72,15 @@ entity extension {
   UNIQUE(assignment_id, student_id)
 }
 
+entity class_extension <<v1.1>> {
+  * assignment_id : INTEGER <<PK, FK>>
+  --
+  * new_deadline : INTEGER
+  * reason : TEXT
+  * granted_by : INTEGER <<FK>>
+  * granted_at : INTEGER
+}
+
 entity submission {
   * submission_id : INTEGER <<PK>>
   --
@@ -130,6 +139,8 @@ app_user ||--o{ enrolment : "enrolled as student"
 course ||--o{ assignment : has
 app_user ||--o{ assignment : creates
 assignment ||--o{ extension : has
+assignment ||--o| class_extension : "has (v1.1)"
+app_user ||--o{ class_extension : grants
 app_user ||--o{ extension : "receives / grants"
 assignment ||--o{ submission : receives
 app_user ||--o{ submission : "submits / marks / moderates / releases"

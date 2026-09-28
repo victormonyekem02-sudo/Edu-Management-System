@@ -1,5 +1,23 @@
 # Release Notes
 
+## Version 1.1.0 - 28 September 2026 (change request CR1)
+
+### New
+- **Class-wide extensions:** lecturers can extend an assignment's deadline for the whole class (Lecturer menu option 6), with a reason. Students are notified.
+- **Extensions on the student's assignment list:** new columns *Original deadline* and *Extension* (`class` / `individual` / `-`).
+- A student's deadline is the latest of the original deadline, the class extension and their individual extension. Late status, late penalties and resubmission all use it.
+
+### Changed
+- Lecturer menu: "View extensions" is now option 7 (and shows the class extension); notifications 8; change password 9.
+
+### Upgrade
+- Back up `lms.db`, install over the old version, start the program: the database is upgraded automatically (schema version 2). No data is changed.
+
+### Quality
+- 278 functional tests (14 new) and 5 performance tests pass; all 264 v1.0 tests still pass (one display expectation updated); business-logic line coverage 96.1 %.
+
+---
+
 ## Version 1.0.0 - 28 September 2026
 
 First release of the Moderated Learning Management System.

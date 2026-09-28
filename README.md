@@ -11,7 +11,7 @@ A C++17 console LMS for a secondary school, where every mark is moderated by the
 ```sh
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build --config Release --parallel
-ctest --test-dir build -C Release -L functional      # 264 tests
+ctest --test-dir build -C Release -L functional      # 278 tests
 ./build/app/lms --db demo.db --seed-demo             # demo accounts, password Passw0rd2026
 ```
 
@@ -21,9 +21,9 @@ Demo accounts: `admin`, `hod.sci`, `hod.lang`, `lect.sci`, `lect.lang`, `stud1` 
 
 | | |
 |---|---|
-| Release | v1.0 (see tags) |
-| Tests | 264 functional + 5 performance, all passing |
-| Business-logic line coverage | 95.9 % |
+| Release | v1.1 (tags `v1.0`, `v1.1`) |
+| Tests | 278 functional + 5 performance, all passing |
+| Business-logic line coverage | 96.1 % |
 | Static analysis | cppcheck 0, clang-tidy 0 findings |
 | Max cyclomatic complexity | 14 |
 

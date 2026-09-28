@@ -99,12 +99,79 @@ void AssignmentService::grantExtension(const User& actor, int assignmentId, int 
     events_.publish(event);
 }
 
-Timestamp AssignmentService::effectiveDeadline(const Assignment& assignment, int studentId) const {
-    Timestamp deadline = assignment.deadline;
-    if (std::optional<Extension> e = repos_.assignments.findExtension(assignment.id, studentId)) {
-        deadline = std::max(deadline, e->newDeadline);
+std::string extensionKindName(ExtensionKind kind) {
+    switch (kind) {
+        case ExtensionKind::Individual:
+            return "individual";
+        case ExtensionKind::Class:
+            return "class";
+        case ExtensionKind::None:
+            break;
     }
-    return deadline;
+    return "-";
+}
+
+DeadlineInfo AssignmentService::deadlineFor(const Assignment& assignment, int studentId) const {
+    DeadlineInfo info{assignment.deadline, ExtensionKind::None};
+    if (std::optional<ClassExtension> c = repos_.assignments.findClassExtension(assignment.id)) {
+        if (c->newDeadline > info.deadline) {
+            info = {c->newDeadline, ExtensionKind::Class};
+        }
+    }
+    if (std::optional<Extension> e = repos_.assignments.findExtension(assignment.id, studentId)) {
+        if (e->newDeadline > info.deadline) {
+            info = {e->newDeadline, ExtensionKind::Individual};
+        }
+    }
+    return info;
+}
+
+Timestamp AssignmentService::effectiveDeadline(const Assignment& assignment, int studentId) const {
+    return deadlineFor(assignment, studentId).deadline;
+}
+
+void AssignmentService::grantClassExtension(const User& actor, int assignmentId,
+                                            Timestamp newDeadline, const std::string& reason) {
+    actor.require(Permission::GrantExtension);
+    const Assignment assignment = requireOwnAssignment(actor, assignmentId);
+    if (newDeadline <= assignment.deadline) {
+        throw ValidationError("An extension must be later than the original deadline.");
+    }
+    const std::string why = text::requireText(reason, "Reason", kMaxReasonLength);
+    std::vector<Submission> submissions = repos_.submissions.listByAssignment(assignmentId);
+    for (const Submission& s : submissions) {
+        if (s.status == SubmissionStatus::Moderated || s.status == SubmissionStatus::Released) {
+            throw BusinessRuleError(
+                "Marks for this assignment are already being moderated; the class deadline can "
+                "no longer be changed.");
+        }
+    }
+
+    tx_.run([&] {
+        repos_.assignments.saveClassExtension(
+            ClassExtension{assignmentId, newDeadline, why, actor.id(), clock_.now()});
+        for (Submission& s : submissions) {
+            if (s.status == SubmissionStatus::Late &&
+                s.submittedAt <= effectiveDeadline(assignment, s.studentId)) {
+                SubmissionLifecycle::requireTransition(s.status, SubmissionStatus::Submitted);
+                s.status = SubmissionStatus::Submitted;
+                repos_.submissions.update(s);
+            }
+        }
+    });
+
+    SubmissionEvent event;
+    event.type = SubmissionEventType::ClassExtensionGranted;
+    event.assignmentId = assignmentId;
+    event.actorId = actor.id();
+    events_.publish(event);
+}
+
+std::optional<ClassExtension> AssignmentService::classExtension(const User& actor,
+                                                                int assignmentId) const {
+    actor.require(Permission::GrantExtension);
+    requireOwnAssignment(actor, assignmentId);
+    return repos_.assignments.findClassExtension(assignmentId);
 }
 
 std::vector<StudentAssignmentView> AssignmentService::listForStudent(const User& student) const {
@@ -115,8 +182,10 @@ std::vector<StudentAssignmentView> AssignmentService::listForStudent(const User&
             StudentAssignmentView v;
             v.assignment = a;
             v.course = course;
-            v.effectiveDeadline = effectiveDeadline(a, student.id());
-            v.extended = v.effectiveDeadline > a.deadline;
+            const DeadlineInfo deadline = deadlineFor(a, student.id());
+            v.effectiveDeadline = deadline.deadline;
+            v.extensionKind = deadline.kind;
+            v.extended = deadline.kind != ExtensionKind::None;
             if (std::optional<Submission> s = repos_.submissions.find(a.id, student.id())) {
                 v.status = s->status;
                 v.version = s->version;

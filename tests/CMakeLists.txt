@@ -20,8 +20,10 @@ add_executable(lms_tests
     integration/test_marking_service.cpp
     integration/test_moderation_service.cpp
     integration/test_notifications.cpp
+    integration/test_class_extension.cpp
     system/test_system_usecases.cpp)
 target_include_directories(lms_tests PRIVATE support)
+target_compile_definitions(lms_tests PRIVATE LMS_SOURCE_DIR="${PROJECT_SOURCE_DIR}")
 target_link_libraries(lms_tests PRIVATE lms_ui lms_core GTest::gtest_main)
 lms_set_warnings(lms_tests)
 gtest_discover_tests(lms_tests DISCOVERY_TIMEOUT 60 PROPERTIES LABELS "functional")

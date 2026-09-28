@@ -1,7 +1,7 @@
 # Software Requirements Specification (SRS)
 
 **System:** Moderated Learning Management System (LMS)
-**Version:** 1.0 (baseline approved at Gate 1)
+**Version:** 1.1 (baseline 1.0 approved at Gate 1; FR-22 added by change request CR1)
 **Structure:** adapted from ISO/IEC/IEEE 29148:2018, clause 9.6 (SRS content)
 
 ---
@@ -20,7 +20,7 @@ The LMS is a C++17 console application that runs offline on one school computer 
 
 | Term | Definition |
 |------|------------|
-| Effective deadline | The later of the assignment deadline and the student's individual extension. |
+| Effective deadline | The latest of the assignment deadline, the class-wide extension (v1.1) and the student's individual extension. |
 | Day late | Each started 24-hour period after the effective deadline (BR-02). |
 | Raw mark | The lecturer's mark before any late penalty. |
 | Final mark | Raw mark minus late deduction, or the value set by the HoD at moderation. |
@@ -92,6 +92,7 @@ Priority uses MoSCoW. Each requirement is verified by the method shown (T = test
 | FR-19 | The system shall show in-app notifications at login: lecturers on submissions, HoDs on marks awaiting moderation, students on extensions and released marks. | Could | Lecturer (speed) | T: NotificationTest.* |
 | FR-20 | Every user shall be able to change their own password after re-entering the current one. | Should | IT officer | T: AuthTest.ChangePasswordRequiresCurrentPasswordAndPolicy, ST23 |
 | FR-21 | On first start with an empty database the system shall require the creation of an administrator account. | Should | Operability | T: ST20, AdminTest.BootstrapOnlyAllowedOnce |
+| FR-22 | *(v1.1, CR1)* A lecturer shall be able to extend the deadline of an assignment for the whole class with a reason, and the student's assignment list shall show the original deadline, the student's effective deadline and whether an individual or class extension applies. | Must | CR1 | T: ClassExtensionTest.*, ST28-ST29 (see docs/10-maintenance) |
 | FR-W1 | Released marks can be corrected after release. | Won't (v1.x) | A11 | - |
 | FR-W2 | E-mail or SMS notifications. | Won't (offline) | NFR-09 | - |
 
@@ -112,7 +113,7 @@ Priority uses MoSCoW. Each requirement is verified by the method shown (T = test
 |----|------|
 | BR-01 | Late penalty: 10 % of the maximum mark is deducted for each day late, for days 1 to 3. |
 | BR-02 | A day late is each started 24-hour period after the effective deadline. Work more than 3 days late receives a final mark of 0. The deduction never exceeds the raw mark. |
-| BR-03 | Effective deadline = the later of the assignment deadline and the student's extension. Lateness is evaluated at marking time against the effective deadline. An unmarked LATE submission covered by a new extension becomes SUBMITTED. |
+| BR-03 | Effective deadline = the latest of the assignment deadline, the class-wide extension (v1.1) and the student's individual extension. Lateness is evaluated at marking time against the effective deadline. An unmarked LATE submission covered by a new extension becomes SUBMITTED. |
 | BR-04 | Late work is never rejected. |
 | BR-05 | Resubmission is allowed only while the work is unmarked and the current time is not after the effective deadline. All versions are kept. |
 | BR-06 | Released marks are final. Lecturers cannot change a mark once it is moderated. |

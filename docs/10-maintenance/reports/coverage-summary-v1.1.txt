@@ -1,0 +1,42 @@
+------------------------------------------------------------------------------
+                           GCC Code Coverage Report
+Directory: .
+------------------------------------------------------------------------------
+File                                       Lines     Exec  Cover   Missing
+------------------------------------------------------------------------------
+lib/include/lms/common/Clock.h                 5        0     0%   19,25-28
+lib/include/lms/data/Database.h               10       10   100%
+lib/include/lms/data/Repositories.h            7        7   100%
+lib/include/lms/data/SqliteRepositories.h
+                                               8        8   100%
+lib/include/lms/domain/SubmissionStatus.h
+                                               1        0     0%   32
+lib/include/lms/domain/User.h                 15       12    80%   20,23,29
+lib/include/lms/events/SubmissionEvents.h
+                                               1        0     0%   31
+lib/include/lms/policy/LatePenaltyPolicy.h
+                                               2        0     0%   24,46
+lib/include/lms/security/PasswordHasher.h
+                                               2        0     0%   13,30
+lib/src/common/TextUtil.cpp                   27       27   100%
+lib/src/common/TimeUtil.cpp                   74       72    97%   21,99
+lib/src/data/Database.cpp                    151      137    90%   38-40,44,51,58,70,81,210-213,222,225
+lib/src/data/SqliteRepositories.cpp          507      493    97%   32,53,65,93,110,119,119,119,119,119,119,119,119,127
+lib/src/domain/Role.cpp                       61       58    95%   18,48,80
+lib/src/domain/SubmissionStatus.cpp           82       78    95%   21,56,74,102
+lib/src/domain/User.cpp                       48       47    97%   84
+lib/src/events/SubmissionEvents.cpp           12       12   100%
+lib/src/policy/LatePenaltyPolicy.cpp          56       55    98%   83
+lib/src/security/PasswordHasher.cpp           51       48    94%   33,43,63
+lib/src/services/AdminService.cpp            150      149    99%   133
+lib/src/services/AssignmentService.cpp       165      163    98%   197,200
+lib/src/services/AuthService.cpp              40       39    97%   63
+lib/src/services/DirectoryService.cpp         54       49    90%   25,34,40,63,73
+lib/src/services/LmsSystem.cpp                26       22    84%   33-36
+lib/src/services/MarkingService.cpp           79       79   100%
+lib/src/services/ModerationService.cpp       177      173    97%   21,34,57,224
+lib/src/services/NotificationService.cpp      73       71    97%   21,67
+lib/src/services/SubmissionService.cpp        89       87    97%   97,117
+------------------------------------------------------------------------------
+TOTAL                                       1973     1896    96%
+------------------------------------------------------------------------------

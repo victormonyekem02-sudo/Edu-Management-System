@@ -61,6 +61,9 @@ public:
     virtual void saveExtension(const Extension& extension) = 0;
     virtual std::optional<Extension> findExtension(int assignmentId, int studentId) const = 0;
     virtual std::vector<Extension> listExtensions(int assignmentId) const = 0;
+    /// Inserts or replaces the class-wide extension of an assignment (v1.1).
+    virtual void saveClassExtension(const ClassExtension& extension) = 0;
+    virtual std::optional<ClassExtension> findClassExtension(int assignmentId) const = 0;
 };
 
 class ISubmissionRepository {
