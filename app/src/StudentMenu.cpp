@@ -65,21 +65,22 @@ void StudentMenu::listAssignments() {
     const Timestamp now = sys_.clock().now();
     std::vector<std::vector<std::string>> rows;
     for (const StudentAssignmentView& v : sys_.assignments().listForStudent(user_)) {
-        std::string deadline = time_util::formatLocal(v.effectiveDeadline);
-        if (v.extended) {
-            deadline += " (extended)";
-        }
+        const std::string deadline = time_util::formatLocal(v.effectiveDeadline);
         const std::int64_t remaining = v.effectiveDeadline - now;
         const std::string timing = remaining >= 0
                                        ? time_util::describeDuration(remaining) + " left"
                                        : "deadline passed";
         rows.push_back({std::to_string(v.assignment.id), v.course.code, v.assignment.title,
-                        deadline, timing, std::to_string(v.assignment.maxMark),
+                        time_util::formatLocal(v.assignment.deadline), deadline,
+                        extensionKindName(v.extensionKind), timing,
+                        std::to_string(v.assignment.maxMark),
                         v.status ? statusDisplayName(*v.status) +
                                        (v.version > 1 ? " (v" + std::to_string(v.version) + ")" : "")
                                  : "Not submitted"});
     }
-    io_.table({"ID", "Course", "Assignment", "Your deadline", "Time", "Max", "Status"}, rows);
+    io_.table({"ID", "Course", "Assignment", "Original deadline", "Your deadline", "Extension",
+               "Time", "Max", "Status"},
+              rows);
 }
 
 void StudentMenu::submitWork() {

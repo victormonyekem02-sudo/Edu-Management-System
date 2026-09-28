@@ -401,6 +401,34 @@ std::vector<Extension> SqliteAssignmentRepository::listExtensions(int assignment
     return readAll<Extension>(st, readExtension);
 }
 
+void SqliteAssignmentRepository::saveClassExtension(const ClassExtension& e) {
+    db_.prepare(
+           "INSERT INTO class_extension (assignment_id, new_deadline, reason, granted_by, "
+           "granted_at) VALUES (?, ?, ?, ?, ?) "
+           "ON CONFLICT (assignment_id) DO UPDATE SET new_deadline = excluded.new_deadline, "
+           "reason = excluded.reason, granted_by = excluded.granted_by, "
+           "granted_at = excluded.granted_at")
+        .bind(1, e.assignmentId)
+        .bind(2, e.newDeadline)
+        .bind(3, e.reason)
+        .bind(4, e.grantedBy)
+        .bind(5, e.grantedAt)
+        .run();
+}
+
+std::optional<ClassExtension> SqliteAssignmentRepository::findClassExtension(
+    int assignmentId) const {
+    Statement st = db_.prepare(
+        "SELECT assignment_id, new_deadline, reason, granted_by, granted_at "
+        "FROM class_extension WHERE assignment_id = ?");
+    st.bind(1, assignmentId);
+    if (st.step()) {
+        return ClassExtension{st.columnInt(0), st.columnInt64(1), st.columnText(2),
+                              st.columnInt(3), st.columnInt64(4)};
+    }
+    return std::nullopt;
+}
+
 // ---- Submissions -------------------------------------------------------------
 
 int SqliteSubmissionRepository::add(const Submission& s) {

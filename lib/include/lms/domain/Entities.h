@@ -42,6 +42,16 @@ struct Extension {
     Timestamp grantedAt = 0;
 };
 
+/// Deadline extension for every student enrolled on the assignment's course
+/// (release v1.1, change request CR1). At most one per assignment.
+struct ClassExtension {
+    int assignmentId = 0;
+    Timestamp newDeadline = 0;
+    std::string reason;
+    int grantedBy = 0;
+    Timestamp grantedAt = 0;
+};
+
 struct Submission {
     int id = 0;
     int assignmentId = 0;

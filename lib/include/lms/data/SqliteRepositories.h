@@ -60,6 +60,8 @@ public:
     void saveExtension(const Extension& extension) override;
     std::optional<Extension> findExtension(int assignmentId, int studentId) const override;
     std::vector<Extension> listExtensions(int assignmentId) const override;
+    void saveClassExtension(const ClassExtension& extension) override;
+    std::optional<ClassExtension> findClassExtension(int assignmentId) const override;
 
 private:
     Database& db_;

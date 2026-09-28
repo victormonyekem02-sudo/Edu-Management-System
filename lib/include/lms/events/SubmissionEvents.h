@@ -11,7 +11,8 @@ enum class SubmissionEventType {
     Marked,
     Moderated,
     Released,
-    ExtensionGranted
+    ExtensionGranted,
+    ClassExtensionGranted  ///< v1.1: studentId is 0, every enrolled student is affected
 };
 
 struct SubmissionEvent {

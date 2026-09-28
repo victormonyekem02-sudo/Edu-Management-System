@@ -4,6 +4,8 @@
 
 #include <cstdio>
 #include <filesystem>
+#include <fstream>
+#include <sstream>
 
 #include "TestSchool.h"
 #include "lms/common/Errors.h"
@@ -23,7 +25,7 @@ TEST(IT_DB, MigrationCreatesLatestSchemaAndIsIdempotent) {
     EXPECT_EQ(db.userVersion(), SchemaMigrator::latestVersion());
     for (const char* table : {"department", "app_user", "course", "course_lecturer", "enrolment",
                               "assignment", "extension", "submission", "submission_version",
-                              "mark_audit", "notification"}) {
+                              "mark_audit", "notification", "class_extension"}) {
         Statement st = db.prepare("SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name=?");
         st.bind(1, table);
         ASSERT_TRUE(st.step());
@@ -144,6 +146,39 @@ TEST(IT_DB, DataPersistsAcrossRestarts) {
     std::filesystem::remove(path);
     std::filesystem::remove(path + "-wal");
     std::filesystem::remove(path + "-shm");
+}
+
+// CR1 adaptive part: a database created by release v1.0 (schema 1, with data) must be
+// upgraded in place by v1.1 without losing anything.
+TEST(IT_DB, UpgradesVersion1DatabaseWithoutDataLoss) {
+    const std::string path =
+        (std::filesystem::temp_directory_path() / "lms_upgrade_test.db").string();
+    for (const char* suffix : {"", "-wal", "-shm"}) {
+        std::filesystem::remove(path + suffix);
+    }
+    {
+        Database v1(path);
+        std::ifstream file(std::string(LMS_SOURCE_DIR) + "/sql/001_initial_schema.sql");
+        ASSERT_TRUE(file.good());
+        std::stringstream sql;
+        sql << file.rdbuf();
+        v1.execute(sql.str());
+        v1.setUserVersion(1);
+        v1.execute("INSERT INTO department (name) VALUES ('Sciences')");
+    }
+    {
+        LmsSystem upgraded(path, std::make_unique<FixedClock>(kT0),
+                           std::make_unique<Argon2idPasswordHasher>(Argon2Params::fastForTesting()),
+                           std::make_unique<PercentPerDayPenaltyPolicy>());
+        EXPECT_EQ(upgraded.database().userVersion(), 2);
+        const auto departments = upgraded.repositories().departments.listAll();
+        ASSERT_EQ(departments.size(), 1u);
+        EXPECT_EQ(departments[0].name, "Sciences");
+        EXPECT_FALSE(upgraded.repositories().assignments.findClassExtension(1).has_value());
+    }
+    for (const char* suffix : {"", "-wal", "-shm"}) {
+        std::filesystem::remove(path + suffix);
+    }
 }
 
 TEST(IT_DB, OpeningAnInvalidPathFails) {

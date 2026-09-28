@@ -79,6 +79,7 @@ private:
     void viewSubmissions();
     void markSubmission();
     void grantExtension();
+    void grantClassExtension();
     void viewExtensions();
     int chooseOwnCourse();
 };

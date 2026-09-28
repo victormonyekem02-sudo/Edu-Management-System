@@ -12,6 +12,7 @@ std::vector<MenuItem> LecturerMenu::items() {
         {"View submissions for an assignment", [this] { viewSubmissions(); }},
         {"Mark or re-mark a submission", [this] { markSubmission(); }},
         {"Grant an individual extension", [this] { grantExtension(); }},
+        {"Extend the deadline for the whole class", [this] { grantClassExtension(); }},
         {"View extensions for an assignment", [this] { viewExtensions(); }},
     };
 }
@@ -114,9 +115,23 @@ void LecturerMenu::grantExtension() {
                 time_util::formatLocal(deadline) + ".");
 }
 
+void LecturerMenu::grantClassExtension() {
+    listCoursesAndAssignments();
+    const int assignmentId = io_.readInt("Assignment ID", 1, 1000000000);
+    const Timestamp deadline = io_.readDateTime("New deadline for the whole class");
+    const std::string reason = io_.readRequired("Reason");
+    sys_.assignments().grantClassExtension(user_, assignmentId, deadline, reason);
+    io_.success("Deadline extended for the whole class until " + time_util::formatLocal(deadline) +
+                ". Students with a later individual extension keep theirs.");
+}
+
 void LecturerMenu::viewExtensions() {
     listCoursesAndAssignments();
     const int assignmentId = io_.readInt("Assignment ID", 1, 1000000000);
+    if (auto c = sys_.assignments().classExtension(user_, assignmentId)) {
+        io_.info("Class extension: until " + time_util::formatLocal(c->newDeadline) + " - " +
+                 c->reason + " (granted by " + userName(c->grantedBy) + ")");
+    }
     std::vector<std::vector<std::string>> rows;
     for (const Extension& e : sys_.assignments().listExtensions(user_, assignmentId)) {
         rows.push_back({userName(e.studentId), time_util::formatLocal(e.newDeadline), e.reason,

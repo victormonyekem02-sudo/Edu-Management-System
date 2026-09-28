@@ -64,8 +64,15 @@ def scenarios():
          login("lect.sci") + ["5", "1", "stud3", in3days, "Hospital letter"] + logout()
          + login("stud3") + ["2", "3", "1", "my answers", "."] + logout()
          + login("stud4") + ["3", "1", "my answers", "."] + logout() + ["0"],
-         ["[OK] Extension granted to Kamohelo Tau", "granted an extension", "(extended)",
+         ["[OK] Extension granted to Kamohelo Tau", "granted an extension", "individual",
           "Submitted on time", "[OK] Submitted LATE."]),
+        ("AT-07", "CR1: lecturer extends the deadline for the whole class",
+         True,
+         login("lect.sci") + ["6", "1", in3days, "Sports day clash", "7", "1"] + logout()
+         + login("stud1") + ["2", "3", "1", "on time now", "."] + logout()
+         + login("stud2") + ["2"] + logout() + ["0"],
+         ["[OK] Deadline extended for the whole class", "Class extension: until",
+          "extended for the whole class", "class", "Submitted on time"]),
     ]
 
 

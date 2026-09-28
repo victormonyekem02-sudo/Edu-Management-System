@@ -43,6 +43,9 @@ void NotificationService::onSubmissionEvent(const SubmissionEvent& event) {
         case SubmissionEventType::ExtensionGranted:
             notifyExtension(event, what);
             break;
+        case SubmissionEventType::ClassExtensionGranted:
+            notifyClassExtension(*assignment, what);
+            break;
     }
 }
 
@@ -65,6 +68,18 @@ void NotificationService::notifyHeadOfDepartment(const std::optional<Course>& co
     }
     if (std::optional<UserRecord> hod = repos_.users.findHeadOfDepartment(course->departmentId)) {
         notify(hod->id, "A mark for " + who + " on " + what + " awaits moderation.");
+    }
+}
+
+void NotificationService::notifyClassExtension(const Assignment& assignment,
+                                               const std::string& what) {
+    if (std::optional<ClassExtension> c = repos_.assignments.findClassExtension(assignment.id)) {
+        const std::string message = "The deadline for " + what +
+                                    " has been extended for the whole class until " +
+                                    time_util::formatLocal(c->newDeadline) + ".";
+        for (const int studentId : repos_.courses.studentIds(assignment.courseId)) {
+            notify(studentId, message);
+        }
     }
 }
 
