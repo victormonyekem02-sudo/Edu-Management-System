@@ -50,6 +50,7 @@ void RoleMenu::showNotifications(bool unreadOnly) {
     }
     io_.heading(unreadOnly ? "New notifications" : "All notifications");
     std::vector<std::vector<std::string>> rows;
+    rows.reserve(list.size());
     for (const Notification& n : list) {
         rows.push_back({time_util::formatLocal(n.createdAt), n.read ? "" : "NEW", n.message});
     }
@@ -81,6 +82,7 @@ std::string RoleMenu::courseLabel(int courseId) {
 
 void RoleMenu::printAudit(const std::vector<MarkAuditEntry>& entries) {
     std::vector<std::vector<std::string>> rows;
+    rows.reserve(entries.size());
     for (const MarkAuditEntry& e : entries) {
         rows.push_back({time_util::formatLocal(e.changedAt), std::to_string(e.submissionId),
                         userName(e.changedBy), auditActionToCode(e.action),

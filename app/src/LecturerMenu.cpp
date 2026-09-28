@@ -37,6 +37,7 @@ int LecturerMenu::chooseOwnCourse() {
     if (courses.empty()) {
         throw BusinessRuleError("You are not assigned to any course yet. Ask the administrator.");
     }
+    rows.reserve(courses.size());
     for (const Course& c : courses) {
         rows.push_back({std::to_string(c.id), c.code, c.title});
     }
@@ -46,21 +47,21 @@ int LecturerMenu::chooseOwnCourse() {
 
 void LecturerMenu::createAssignment() {
     const int course = chooseOwnCourse();
-    const std::string title = io_.readRequired("Title");
+    const std::string assignmentTitle = io_.readRequired("Title");
     const std::string description = io_.readLine("Description (optional)");
     const Timestamp deadline = io_.readDateTime("Deadline");
     const int maxMark = io_.readInt("Maximum mark", 1, 1000);
-    const int id =
-        sys_.assignments().createAssignment(user_, course, title, description, deadline, maxMark);
+    const int id = sys_.assignments().createAssignment(user_, course, assignmentTitle, description,
+                                                       deadline, maxMark);
     io_.success("Assignment created with ID " + std::to_string(id) + ".");
 }
 
 void LecturerMenu::viewSubmissions() {
     listCoursesAndAssignments();
     const int assignmentId = io_.readInt("Assignment ID", 1, 1000000000);
-    const auto items = sys_.marking().listForAssignment(user_, assignmentId);
+    const auto submissions = sys_.marking().listForAssignment(user_, assignmentId);
     std::vector<std::vector<std::string>> rows;
-    for (const MarkingItem& item : items) {
+    for (const MarkingItem& item : submissions) {
         const Submission& s = item.submission;
         const int daysLate = LatenessCalculator::daysLate(s.submittedAt, item.effectiveDeadline);
         rows.push_back({std::to_string(s.id), item.studentName, time_util::formatLocal(s.submittedAt),
@@ -71,7 +72,7 @@ void LecturerMenu::viewSubmissions() {
     io_.table({"Subm. ID", "Student", "Submitted", "Timeliness", "Ver.", "Status", "Mark"}, rows);
     const auto view = io_.readOptionalInt("Submission ID to read (blank to skip)", 1, 1000000000);
     if (view) {
-        for (const MarkingItem& item : items) {
+        for (const MarkingItem& item : submissions) {
             if (item.submission.id == *view) {
                 io_.heading("Submission " + std::to_string(*view) + " by " + item.studentName);
                 io_.println(item.submission.content);

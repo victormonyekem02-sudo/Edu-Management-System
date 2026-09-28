@@ -44,11 +44,13 @@ public:
     NotificationService& notifications() { return notifications_; }
     DirectoryService& directory() { return directory_; }
     const IClock& clock() const { return *clock_; }
+    const std::string& databasePath() const { return databasePath_; }
     Database& database() { return db_; }
     /// Direct repository access for tests and demo seeding only - the UI uses services.
     Repositories repositories() { return store_.repositories(); }
 
 private:
+    std::string databasePath_;
     Database db_;
     std::unique_ptr<IClock> clock_;
     std::unique_ptr<IPasswordHasher> hasher_;

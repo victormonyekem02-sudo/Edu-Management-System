@@ -8,7 +8,7 @@
 
 #include "lms/common/Errors.h"
 
-#if defined(_WIN32)
+#ifdef _WIN32
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
 #endif
@@ -26,7 +26,7 @@ std::vector<std::uint8_t> secureRandomBytes(std::size_t count) {
     if (count == 0) {
         return bytes;
     }
-#if defined(_WIN32)
+#ifdef _WIN32
     const NTSTATUS status = BCryptGenRandom(nullptr, bytes.data(), static_cast<ULONG>(count),
                                             BCRYPT_USE_SYSTEM_PREFERRED_RNG);
     if (!BCRYPT_SUCCESS(status)) {
@@ -42,7 +42,7 @@ std::vector<std::uint8_t> secureRandomBytes(std::size_t count) {
     return bytes;
 }
 
-Argon2idPasswordHasher::Argon2idPasswordHasher(Argon2Params params) : params_(params) {
+Argon2idPasswordHasher::Argon2idPasswordHasher(const Argon2Params& params) : params_(params) {
     if (params_.saltLength < ARGON2_MIN_SALT_LENGTH || params_.hashLength < 16 ||
         params_.timeCost < 1 || params_.parallelism < 1) {
         throw SecurityError("Invalid Argon2 parameters.");

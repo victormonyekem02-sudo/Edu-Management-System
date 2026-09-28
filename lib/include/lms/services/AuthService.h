@@ -32,6 +32,9 @@ private:
     IUserRepository& users_;
     const IPasswordHasher& hasher_;
     const IClock& clock_;
+    /// Hash of a fixed value, verified when the username is unknown so that a failed
+    /// login takes the same time whether or not the account exists (review finding R1).
+    std::string dummyHash_;
 };
 
 }  // namespace lms

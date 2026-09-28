@@ -1,3 +1,5 @@
+#include <array>
+
 #include "lms/common/Errors.h"
 #include "lms/ui/Menus.h"
 
@@ -42,9 +44,9 @@ void AdminMenu::listUsers() {
 void AdminMenu::createUser() {
     io_.println("Roles: 1 Administrator, 2 Lecturer, 3 Head of Department, 4 Student");
     const int roleChoice = io_.readInt("Role", 1, 4);
-    const Role roles[] = {Role::Administrator, Role::Lecturer, Role::HeadOfDepartment,
-                          Role::Student};
-    const Role role = roles[roleChoice - 1];
+    static constexpr std::array<Role, 4> kRoles{Role::Administrator, Role::Lecturer,
+                                                Role::HeadOfDepartment, Role::Student};
+    const Role role = kRoles.at(static_cast<std::size_t>(roleChoice - 1));
     const std::string username = io_.readRequired("Username");
     const std::string fullName = io_.readRequired("Full name");
     std::optional<int> department;
@@ -118,10 +120,10 @@ void AdminMenu::listCourses() {
 
 void AdminMenu::createCourse() {
     const std::string code = io_.readRequired("Course code (e.g. MAT101)");
-    const std::string title = io_.readRequired("Course title");
+    const std::string courseTitle = io_.readRequired("Course title");
     listDepartments();
     const int dept = io_.readInt("Department ID", 1, 1000000);
-    const int id = sys_.admin().createCourse(user_, code, title, dept);
+    const int id = sys_.admin().createCourse(user_, code, courseTitle, dept);
     io_.success("Course created with ID " + std::to_string(id) + ".");
 }
 

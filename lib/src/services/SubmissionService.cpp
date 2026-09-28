@@ -32,8 +32,8 @@ SubmitResult SubmissionService::submit(const User& actor, int assignmentId,
 
     std::optional<Submission> existing = repos_.submissions.find(assignmentId, actor.id());
     if (existing) {
-        if (!(existing->status == SubmissionStatus::Submitted ||
-              existing->status == SubmissionStatus::Late)) {
+        if (existing->status != SubmissionStatus::Submitted &&
+            existing->status != SubmissionStatus::Late) {
             throw BusinessRuleError("This work has already been marked and cannot be resubmitted.");
         }
         if (late) {

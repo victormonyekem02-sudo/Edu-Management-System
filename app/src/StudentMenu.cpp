@@ -1,3 +1,4 @@
+#include <filesystem>
 #include <fstream>
 #include <sstream>
 
@@ -10,9 +11,25 @@ namespace lms::ui {
 
 namespace {
 
-/// Reads a file the student wants to submit (answer typed as "@path").
-std::string readSubmissionFile(const std::string& path) {
-    std::ifstream file(path, std::ios::binary);
+/// Reads a file the student wants to submit (answer typed as "@path"). The size is checked
+/// before reading, and the LMS database itself can never be submitted (review finding R3).
+std::string readSubmissionFile(const std::string& path, const std::string& databasePath) {
+    namespace fs = std::filesystem;
+    std::error_code ec;
+    if (!fs::is_regular_file(path, ec)) {
+        throw ValidationError("'" + path + "' is not a file that can be submitted.");
+    }
+    if (databasePath != ":memory:" && fs::exists(databasePath, ec) &&
+        fs::equivalent(path, databasePath, ec)) {
+        throw ValidationError("That file cannot be submitted.");
+    }
+    const auto size = fs::file_size(path, ec);
+    if (ec || size > SubmissionService::kMaxContentLength) {
+        throw ValidationError("The file is too large (maximum " +
+                              std::to_string(SubmissionService::kMaxContentLength / 1000) +
+                              " KB).");
+    }
+    const std::ifstream file(path, std::ios::binary);
     if (!file) {
         throw ValidationError("Cannot open the file '" + path + "'.");
     }
@@ -72,7 +89,7 @@ void StudentMenu::submitWork() {
     std::string content = io_.readMultiline("Your work");
     const std::string trimmed = text::trim(content);
     if (!trimmed.empty() && trimmed.front() == '@' && trimmed.find('\n') == std::string::npos) {
-        content = readSubmissionFile(text::trim(trimmed.substr(1)));
+        content = readSubmissionFile(text::trim(trimmed.substr(1)), sys_.databasePath());
     }
     const SubmitResult r = sys_.submissions().submit(user_, assignmentId, content);
     if (r.resubmission) {

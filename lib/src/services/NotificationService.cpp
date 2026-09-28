@@ -28,22 +28,11 @@ void NotificationService::onSubmissionEvent(const SubmissionEvent& event) {
 
     switch (event.type) {
         case SubmissionEventType::Submitted:
-        case SubmissionEventType::Resubmitted: {
-            std::string verb =
-                event.type == SubmissionEventType::Resubmitted ? " resubmitted " : " submitted ";
-            std::string message = who + verb + what + (event.late ? " LATE." : ".");
-            for (int lecturerId : repos_.courses.lecturerIds(assignment->courseId)) {
-                notify(lecturerId, message);
-            }
+        case SubmissionEventType::Resubmitted:
+            notifyLecturers(event, *assignment, who, what);
             break;
-        }
         case SubmissionEventType::Marked:
-            if (course) {
-                if (std::optional<UserRecord> hod =
-                        repos_.users.findHeadOfDepartment(course->departmentId)) {
-                    notify(hod->id, "A mark for " + who + " on " + what + " awaits moderation.");
-                }
-            }
+            notifyHeadOfDepartment(course, who, what);
             break;
         case SubmissionEventType::Moderated:
             // Deliberately no notification: the student must not learn anything before release.
@@ -52,13 +41,38 @@ void NotificationService::onSubmissionEvent(const SubmissionEvent& event) {
             notify(event.studentId, "Your mark and feedback for " + what + " have been released.");
             break;
         case SubmissionEventType::ExtensionGranted:
-            if (std::optional<Extension> e =
-                    repos_.assignments.findExtension(event.assignmentId, event.studentId)) {
-                notify(event.studentId, "You have been granted an extension for " + what +
-                                            " until " + time_util::formatLocal(e->newDeadline) +
-                                            ".");
-            }
+            notifyExtension(event, what);
             break;
+    }
+}
+
+void NotificationService::notifyLecturers(const SubmissionEvent& event,
+                                          const Assignment& assignment, const std::string& who,
+                                          const std::string& what) {
+    const std::string verb =
+        event.type == SubmissionEventType::Resubmitted ? " resubmitted " : " submitted ";
+    const std::string message = who + verb + what + (event.late ? " LATE." : ".");
+    for (const int lecturerId : repos_.courses.lecturerIds(assignment.courseId)) {
+        notify(lecturerId, message);
+    }
+}
+
+void NotificationService::notifyHeadOfDepartment(const std::optional<Course>& course,
+                                                 const std::string& who,
+                                                 const std::string& what) {
+    if (!course) {
+        return;
+    }
+    if (std::optional<UserRecord> hod = repos_.users.findHeadOfDepartment(course->departmentId)) {
+        notify(hod->id, "A mark for " + who + " on " + what + " awaits moderation.");
+    }
+}
+
+void NotificationService::notifyExtension(const SubmissionEvent& event, const std::string& what) {
+    if (std::optional<Extension> e =
+            repos_.assignments.findExtension(event.assignmentId, event.studentId)) {
+        notify(event.studentId, "You have been granted an extension for " + what + " until " +
+                                    time_util::formatLocal(e->newDeadline) + ".");
     }
 }
 

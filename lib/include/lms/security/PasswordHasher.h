@@ -37,7 +37,7 @@ struct Argon2Params {
 /// Password Hashing Competition (https://github.com/P-H-C/phc-winner-argon2).
 class Argon2idPasswordHasher final : public IPasswordHasher {
 public:
-    explicit Argon2idPasswordHasher(Argon2Params params = Argon2Params::production());
+    explicit Argon2idPasswordHasher(const Argon2Params& params = Argon2Params::production());
     std::string hash(const std::string& password) const override;
     bool verify(const std::string& password, const std::string& encodedHash) const override;
     const Argon2Params& params() const noexcept { return params_; }

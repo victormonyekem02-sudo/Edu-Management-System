@@ -108,6 +108,7 @@ void ModerationService::adjust(const User& hod, int submissionId, double newFina
         ctx.submission.status != SubmissionStatus::Moderated) {
         throw BusinessRuleError("Only marked or moderated (unreleased) submissions can be adjusted.");
     }
+    // NOLINTNEXTLINE(readability-simplify-boolean-expr): written this way to reject NaN
     if (!(newFinalMark >= 0.0 && newFinalMark <= ctx.assignment.maxMark)) {
         throw ValidationError("Mark must be between 0 and " +
                               std::to_string(ctx.assignment.maxMark) + ".");

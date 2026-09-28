@@ -30,7 +30,8 @@ PenaltyResult MarkingService::mark(const User& actor, int submissionId, double r
             "This submission has been moderated by the Head of Department and can no longer be "
             "changed by the lecturer.");
     }
-    if (!(rawMark >= 0.0 && rawMark <= assignment.maxMark)) {  // also rejects NaN
+    // NOLINTNEXTLINE(readability-simplify-boolean-expr): written this way to reject NaN
+    if (!(rawMark >= 0.0 && rawMark <= assignment.maxMark)) {
         throw ValidationError("Mark must be between 0 and " + std::to_string(assignment.maxMark) +
                               ".");
     }

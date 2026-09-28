@@ -54,7 +54,7 @@ std::optional<Assignment> DirectoryService::findAssignment(int assignmentId) con
 
 std::vector<UserSummary> DirectoryService::lecturersOf(int courseId) const {
     std::vector<UserSummary> result;
-    for (int id : repos_.courses.lecturerIds(courseId)) {
+    for (const int id : repos_.courses.lecturerIds(courseId)) {
         if (std::optional<UserSummary> u = findUser(id)) {
             result.push_back(*u);
         }
@@ -64,7 +64,7 @@ std::vector<UserSummary> DirectoryService::lecturersOf(int courseId) const {
 
 std::vector<UserSummary> DirectoryService::studentsOf(int courseId) const {
     std::vector<UserSummary> result;
-    for (int id : repos_.courses.studentIds(courseId)) {
+    for (const int id : repos_.courses.studentIds(courseId)) {
         if (std::optional<UserSummary> u = findUser(id)) {
             result.push_back(*u);
         }

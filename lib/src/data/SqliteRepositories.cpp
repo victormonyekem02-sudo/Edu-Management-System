@@ -6,7 +6,7 @@ namespace lms {
 
 namespace {
 
-int lastId(Database& db) {
+int lastId(const Database& db) {
     return static_cast<int>(db.lastInsertId());
 }
 

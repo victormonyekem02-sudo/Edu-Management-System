@@ -1,3 +1,6 @@
+#include <array>
+#include <utility>
+
 #include "lms/ui/Application.h"
 
 namespace lms::ui {
@@ -33,14 +36,16 @@ bool seedDemoData(LmsSystem& system) {
         admin.assignLecturer(*adminUser, physics, lectSci);
         admin.assignLecturer(*adminUser, english, lectLang);
 
-        const char* const students[][2] = {{"stud1", "Neo Mohapi"},
-                                           {"stud2", "Lerato Nthane"},
-                                           {"stud3", "Kamohelo Tau"},
-                                           {"stud4", "Rethabile Phiri"},
-                                           {"stud5", "Tumelo Khabo"}};
-        for (const auto& s : students) {
-            const int id =
-                admin.createUser(*adminUser, Role::Student, s[0], s[1], kDemoPassword, std::nullopt);
+        const std::array<std::pair<const char*, const char*>, 5> students{{
+            {"stud1", "Neo Mohapi"},
+            {"stud2", "Lerato Nthane"},
+            {"stud3", "Kamohelo Tau"},
+            {"stud4", "Rethabile Phiri"},
+            {"stud5", "Tumelo Khabo"},
+        }};
+        for (const auto& [username, fullName] : students) {
+            const int id = admin.createUser(*adminUser, Role::Student, username, fullName,
+                                            kDemoPassword, std::nullopt);
             admin.enrolStudent(*adminUser, maths, id);
             admin.enrolStudent(*adminUser, english, id);
         }
@@ -61,11 +66,11 @@ bool seedDemoData(LmsSystem& system) {
             return repos.assignments.add(a);
         };
         addAssignment(maths, lectSci, "Algebra homework 1", "Exercises 1-10, page 42.",
-                      now - 2 * kSecondsPerDay, 25);
+                      now - (2 * kSecondsPerDay), 25);
         addAssignment(maths, lectSci, "Geometry project", "Construct and measure triangles.",
-                      now + 7 * kSecondsPerDay, 50);
+                      now + (7 * kSecondsPerDay), 50);
         addAssignment(english, lectLang, "Essay: My community", "300 to 400 words.",
-                      now + 3 * kSecondsPerDay, 40);
+                      now + (3 * kSecondsPerDay), 40);
     });
     return true;
 }

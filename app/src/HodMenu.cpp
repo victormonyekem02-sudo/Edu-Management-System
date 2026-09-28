@@ -17,10 +17,10 @@ std::vector<MenuItem> HodMenu::items() {
 }
 
 void HodMenu::showQueue(bool pending) {
-    const auto items = pending ? sys_.moderation().pendingModeration(user_)
+    const auto queue = pending ? sys_.moderation().pendingModeration(user_)
                                : sys_.moderation().readyForRelease(user_);
     std::vector<std::vector<std::string>> rows;
-    for (const ModerationItem& i : items) {
+    for (const ModerationItem& i : queue) {
         const Submission& s = i.submission;
         rows.push_back({std::to_string(s.id), i.course.code,
                         std::to_string(i.assignment.id) + " " + i.assignment.title, i.studentName,

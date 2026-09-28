@@ -77,7 +77,7 @@ jobs:
         run: >
           cppcheck --enable=warning,style,performance,portability --std=c++17 --language=c++
           --inline-suppr --suppress=missingIncludeSystem --suppress=unusedFunction
-          --error-exitcode=1 -I lib/include -I app/include lib/src app/src
+          --suppress=useStlAlgorithm --check-level=exhaustive --error-exitcode=1 -I lib/include -I app/include lib/src app/src
       - name: clang-tidy
         run: >
           find lib/src app/src -name '*.cpp' -print0 |

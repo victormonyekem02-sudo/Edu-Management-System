@@ -20,6 +20,7 @@ void validateInputs(double rawMark, int maxMark, int daysLate) {
         throw ValidationError("Maximum mark must be positive.");
     }
     // Written as a negated range check so that NaN is rejected too (defect DEF-01).
+    // NOLINTNEXTLINE(readability-simplify-boolean-expr): the DeMorgan form accepts NaN
     if (!(rawMark >= 0.0 && rawMark <= maxMark)) {
         throw ValidationError("Mark must be between 0 and " + std::to_string(maxMark) + ".");
     }

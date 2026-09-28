@@ -14,7 +14,10 @@ const char* const kGenericLoginFailure = "Invalid username or password.";
 
 AuthService::AuthService(IUserRepository& users, const IPasswordHasher& hasher,
                          const IClock& clock)
-    : users_(users), hasher_(hasher), clock_(clock) {}
+    : users_(users),
+      hasher_(hasher),
+      clock_(clock),
+      dummyHash_(hasher.hash("timing-equaliser-0")) {}
 
 std::unique_ptr<User> AuthService::login(const std::string& username,
                                          const std::string& password) {
@@ -24,6 +27,7 @@ std::unique_ptr<User> AuthService::login(const std::string& username,
     }
     std::optional<UserRecord> record = users_.findByUsername(name);
     if (!record || !record->active) {
+        hasher_.verify(password, dummyHash_);  // equalise timing (R1)
         throw AuthenticationError(kGenericLoginFailure);
     }
 

@@ -26,6 +26,11 @@ public:
 
 private:
     void notify(int userId, const std::string& message);
+    void notifyLecturers(const SubmissionEvent& event, const Assignment& assignment,
+                         const std::string& who, const std::string& what);
+    void notifyHeadOfDepartment(const std::optional<Course>& course, const std::string& who,
+                                const std::string& what);
+    void notifyExtension(const SubmissionEvent& event, const std::string& what);
 
     Repositories repos_;
     const IClock& clock_;
