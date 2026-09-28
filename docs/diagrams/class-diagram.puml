@@ -1,6 +1,6 @@
 @startuml class-diagram
 !pragma layout smetana
-title Moderated LMS - Class Diagram overview (members hidden; see the three detailed views)
+title LMS - Class Diagram overview (members hidden; see the three detailed views)
 skinparam classAttributeIconSize 0
 skinparam class {
   BackgroundColor #FBFCFF

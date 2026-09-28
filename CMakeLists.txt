@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(ModeratedLMS
+project(LMS
     VERSION 1.1.0
-    DESCRIPTION "Moderated Learning Management System (CS4433 final project)"
+    DESCRIPTION "Learning Management System (CS4433 final project)"
     LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -48,9 +48,9 @@ install(FILES
     DESTINATION doc)
 install(DIRECTORY docs/09-deployment/user-manuals DESTINATION doc)
 
-set(CPACK_PACKAGE_NAME "ModeratedLMS")
+set(CPACK_PACKAGE_NAME "LMS")
 set(CPACK_PACKAGE_VENDOR "CS4433 Software Engineering")
 set(CPACK_PACKAGE_VERSION "${PROJECT_VERSION}")
 set(CPACK_GENERATOR "ZIP")
-set(CPACK_PACKAGE_FILE_NAME "ModeratedLMS-${PROJECT_VERSION}-${CMAKE_SYSTEM_NAME}")
+set(CPACK_PACKAGE_FILE_NAME "LMS-${PROJECT_VERSION}-${CMAKE_SYSTEM_NAME}")
 include(CPack)

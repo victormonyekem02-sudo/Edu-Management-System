@@ -1,5 +1,5 @@
 -- =============================================================================
--- Moderated LMS - schema version 2 (release v1.1, change request CR1)
+-- LMS - schema version 2 (release v1.1, change request CR1)
 -- Adds class-wide deadline extensions. Additive only: v1.0 data is unchanged.
 -- =============================================================================
 

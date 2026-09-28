@@ -20,7 +20,7 @@
 
 ## Version 1.0.0 - 28 September 2026
 
-First release of the Moderated Learning Management System.
+First release of the Learning Management System.
 
 ### Features
 - Login for four roles (Administrator, Lecturer, Head of Department, Student), each with its own menu and permissions.

@@ -8,7 +8,7 @@ namespace lms::ui {
 Application::Application(LmsSystem& system, ConsoleIO& io) : sys_(system), io_(io) {}
 
 int Application::run() {
-    io_.heading("Moderated Learning Management System v" LMS_VERSION);
+    io_.heading("Learning Management System v" LMS_VERSION);
     try {
         if (sys_.admin().needsBootstrap()) {
             bootstrap();

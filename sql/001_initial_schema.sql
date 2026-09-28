@@ -1,5 +1,5 @@
 -- =============================================================================
--- Moderated LMS - schema version 1 (release v1.0)
+-- LMS - schema version 1 (release v1.0)
 -- Normalised to 3NF. All timestamps are INTEGER seconds since the Unix epoch (UTC).
 -- This file is embedded into the executable at build time (lib/CMakeLists.txt)
 -- and applied by SchemaMigrator; it is the single source of truth for the schema.

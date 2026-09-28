@@ -1,12 +1,12 @@
 # Installation Guide (for the school technician)
 
-This guide installs the Moderated LMS on **one** school computer. No internet connection is needed to install or use it.
+This guide installs the LMS on **one** school computer. No internet connection is needed to install or use it.
 
 ![Deployment diagram](../diagrams/rendered/deployment.png)
 
 ## 1. What you need
 - A computer with Windows 10 or 11 (64-bit), at least 2 GB RAM and 100 MB free disk space. (Ubuntu 22.04 or later also works; see section 7.)
-- The release file `ModeratedLMS-1.x.x-Windows.zip` (from the GitHub release page or a USB stick).
+- The release file `LMS-1.x.x-Windows.zip` (from the GitHub release page or a USB stick).
 - A USB drive or second folder for backups.
 - About 20 minutes.
 

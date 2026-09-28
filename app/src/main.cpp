@@ -44,7 +44,7 @@ int main(int argc, char* argv[]) {
         } else if (arg == "--seed-demo") {
             seedDemo = true;
         } else if (arg == "--version") {
-            std::cout << "Moderated LMS " << LMS_VERSION << '\n';
+            std::cout << "LMS " << LMS_VERSION << '\n';
             return 0;
         } else if (arg == "--help" || arg == "-h") {
             printUsage();

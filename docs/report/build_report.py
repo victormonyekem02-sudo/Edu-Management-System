@@ -112,7 +112,7 @@ def main():
     # images: captions come from the alt text
     html_body = re.sub(r'<p><img alt="([^"]*)" src="([^"]*)" /></p>',
                        r'<p><img alt="\1" src="\2" /><em class="caption">\1</em></p>', html_body)
-    html = ("<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>Moderated LMS - Final "
+    html = ("<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>LMS - Final "
             "Report</title><style>%s</style></head><body>%s</body></html>" % (CSS, html_body))
     html_path = os.path.join(HERE, "final-report.html")
     io.open(html_path, "w", encoding="utf-8").write(html)

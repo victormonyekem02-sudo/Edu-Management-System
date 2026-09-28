@@ -72,7 +72,7 @@ cmake -S . -B build -DFETCHCONTENT_SOURCE_DIR_SQLITE_AMALGAMATION=/path/sqlite-a
 ```sh
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DLMS_BUILD_TESTS=OFF -DLMS_STATIC_RUNTIME=ON
 cmake --build build --config Release
-cpack --config build/CPackConfig.cmake -C Release     # -> ModeratedLMS-<version>-<OS>.zip
+cpack --config build/CPackConfig.cmake -C Release     # -> LMS-<version>-<OS>.zip
 ```
 
 ## Project layout

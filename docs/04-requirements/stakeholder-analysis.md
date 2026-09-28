@@ -1,6 +1,6 @@
 # Stakeholder Analysis and Conflict Resolution
 
-Project: Moderated Learning Management System (CS4433 final project)
+Project: Learning Management System (CS4433 final project)
 Phase: 2 - Requirements engineering (input to Gate 1)
 
 ## 1. Stakeholders and their interests

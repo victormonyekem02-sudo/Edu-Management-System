@@ -1,6 +1,6 @@
 # Software Design Document (SDD)
 
-**System:** Moderated LMS - design baseline approved at Gate 2, updated for release v1.1 (change request CR1).
+**System:** LMS - design baseline approved at Gate 2, updated for release v1.1 (change request CR1).
 All diagrams are PlantUML sources in [`docs/diagrams`](../diagrams); rendered images are in `docs/diagrams/rendered`.
 
 ---
