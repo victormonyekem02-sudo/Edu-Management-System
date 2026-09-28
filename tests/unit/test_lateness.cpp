@@ -1,6 +1,9 @@
 // UT-LAT: LatenessCalculator - equivalence partitions and boundary values (test plan 5.1).
 #include <gtest/gtest.h>
 
+#include <cctype>
+#include <string>
+
 #include "lms/policy/LatePenaltyPolicy.h"
 
 using lms::kSecondsPerDay;
@@ -45,8 +48,8 @@ INSTANTIATE_TEST_SUITE_P(
         // EP4: more than three days late
         LatenessCase{"72h + 1s late", 3 * kSecondsPerDay + 1, 4},
         LatenessCase{"30 days late", 30 * kSecondsPerDay, 30}),
-    [](const ::testing::TestParamInfo<LatenessCase>& info) {
-        std::string name = info.param.name;
+    [](const ::testing::TestParamInfo<LatenessCase>& paramInfo) {
+        std::string name = paramInfo.param.name;
         for (char& ch : name) {
             if (!std::isalnum(static_cast<unsigned char>(ch))) {
                 ch = '_';
