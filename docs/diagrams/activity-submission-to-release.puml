@@ -1,0 +1,68 @@
+@startuml activity-submission-to-release
+title End-to-end process: from submission to released mark (Activity Diagram with swimlanes)
+
+|Student|
+start
+:Log in and open "My assignments";
+:Choose assignment and enter work;
+|System|
+:Check enrolment and determine
+effective deadline (incl. extension);
+if (Submission already exists?) then (yes)
+  if (Now <= effective deadline\nand not yet marked?) then (yes)
+    :Replace work, version + 1,
+    keep previous version;
+  else (no)
+    :Reject resubmission,
+    keep original;
+    |Student|
+    :See error message;
+    stop
+  endif
+else (no)
+  if (Now <= effective deadline?) then (yes)
+    :Store as SUBMITTED;
+  else (no)
+    :Store as LATE (never rejected);
+  endif
+endif
+:Notify course lecturer(s);
+|Lecturer|
+if (Student asks for more time\nwith a good reason?) then (yes)
+  :Grant individual extension\n(new deadline + reason);
+  |System|
+  :Reclassify LATE -> SUBMITTED
+  if covered by the extension;
+  |Lecturer|
+else (no)
+endif
+:Open submission and read work;
+:Enter raw mark and written feedback;
+|System|
+:Compute days late against effective deadline;
+:Apply late-penalty strategy
+(10% of max per day, 0 after 3 days);
+:Save MARKED + audit entry (who, when, old, new, reason);
+:Notify Head of Department;
+|Head of Department|
+:Review marks awaiting moderation;
+repeat
+  if (Mark appropriate?) then (yes)
+    :Approve;
+  else (no)
+    :Adjust mark and give reason;
+  endif
+  |System|
+  :Save MODERATED + audit entry;
+  |Head of Department|
+repeat while (More marks for this assignment?) is (yes)
+->no;
+:Release moderated marks for the assignment;
+|System|
+:Set RELEASED + audit entry for each;
+:Notify each student;
+|Student|
+:View final mark, late deduction
+and written feedback;
+stop
+@enduml

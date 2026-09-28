@@ -1,0 +1,37 @@
+@startuml state-submission
+!pragma layout smetana
+title Submission life cycle - State Machine Diagram
+skinparam state {
+  BackgroundColor #F8FAFF
+  BorderColor #1F3864
+}
+
+[*] --> Submitted : submit [now <= effectiveDeadline]\n/ version = 1, save version history
+[*] --> Late : submit [now > effectiveDeadline]\n/ accept, flag LATE (BR-04)
+
+Submitted --> Submitted : resubmit [now <= effectiveDeadline]\n/ version++, keep history (BR-05)
+Late --> Submitted : grantExtension [submittedAt <= newDeadline]\n/ reclassify (BR-03)
+
+Submitted --> Marked : mark(raw, feedback)\n/ penalty = 0, audit MARK
+Late --> Marked : mark(raw, feedback)\n/ apply late penalty (BR-01, BR-02), audit MARK
+
+Marked --> Marked : re-mark [reason given]\n/ audit REMARK (BR-09)
+Marked --> Moderated : HoD approve\n/ audit MODERATION_APPROVE
+Marked --> Moderated : HoD adjust [reason given]\n/ audit MODERATION_ADJUST
+Moderated --> Moderated : HoD adjust [reason given]\n/ audit MODERATION_ADJUST
+Moderated --> Released : HoD releases assignment\n/ audit RELEASE, notify student
+
+Released --> [*]
+
+state Submitted : entry / notify course lecturers
+state Late : entry / notify course lecturers ("LATE")
+state Marked : entry / notify Head of Department\nmark hidden from student (BR-07)
+state Moderated : mark still hidden from student
+state Released : mark and feedback visible to student\nno further changes (BR-06)
+
+note right of Released
+  Any event not shown (e.g. resubmit after marking,
+  lecturer re-mark after moderation) is rejected
+  with BusinessRuleError by SubmissionLifecycle.
+end note
+@enduml

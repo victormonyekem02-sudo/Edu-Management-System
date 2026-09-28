@@ -1,0 +1,198 @@
+@startuml class-domain
+!pragma layout smetana
+title Class Diagram (1/3) - domain model, Factory and Strategy
+skinparam classAttributeIconSize 0
+skinparam class {
+  BackgroundColor #FBFCFF
+  BorderColor #1F3864
+}
+top to bottom direction
+hide empty members
+package "domain" {
+  enum Role {
+    Administrator
+    Lecturer
+    HeadOfDepartment
+    Student
+  }
+  enum Permission {
+    ManageUsers
+    ManageDepartments
+    ManageCourses
+    AssignLecturers
+    EnrolStudents
+    CreateAssignment
+    GrantExtension
+    MarkSubmission
+    SubmitWork
+    ViewReleasedResults
+    ModerateMarks
+    ReleaseMarks
+    ViewAuditLog
+  }
+
+  abstract class User {
+    - id_ : int
+    - username_ : string
+    - fullName_ : string
+    - departmentId_ : optional<int>
+    # User(id : int, username : string, fullName : string, departmentId : optional<int>)
+    + id() : int
+    + username() : const string&
+    + fullName() : const string&
+    + departmentId() : optional<int>
+    + {abstract} role() : Role
+    + {abstract} roleTitle() : string
+    + can(p : Permission) : bool
+    + require(p : Permission) : void
+    + {abstract} hasDepartmentScope(departmentId : int) : bool
+    # {abstract} permissions() : const set<Permission>&
+  }
+  class Administrator
+  class Lecturer
+  class HeadOfDepartment
+  class Student
+
+  User <|-- Administrator
+  User <|-- Lecturer
+  User <|-- HeadOfDepartment
+  User <|-- Student
+  User ..> Role
+  User ..> Permission
+
+  class UserRecord <<struct>> {
+    + id : int
+    + username : string
+    + passwordHash : string
+    + fullName : string
+    + role : Role
+    + departmentId : optional<int>
+    + active : bool
+    + failedLoginAttempts : int
+    + lockedUntil : Timestamp
+    + createdAt : Timestamp
+  }
+
+  class UserFactory <<Factory>> {
+    + {static} create(record : const UserRecord&) : unique_ptr<User>
+  }
+  UserFactory ..> UserRecord
+  UserFactory ..> User : <<creates>>
+
+  class Department <<struct>> {
+    + id : int
+    + name : string
+  }
+  class Course <<struct>> {
+    + id : int
+    + code : string
+    + title : string
+    + departmentId : int
+  }
+  class Assignment <<struct>> {
+    + id : int
+    + courseId : int
+    + title : string
+    + description : string
+    + deadline : Timestamp
+    + maxMark : int
+    + createdBy : int
+    + createdAt : Timestamp
+  }
+  class Extension <<struct>> {
+    + id : int
+    + assignmentId : int
+    + studentId : int
+    + newDeadline : Timestamp
+    + reason : string
+    + grantedBy : int
+    + grantedAt : Timestamp
+  }
+  enum SubmissionStatus {
+    Submitted
+    Late
+    Marked
+    Moderated
+    Released
+  }
+  class Submission <<struct>> {
+    + id : int
+    + assignmentId : int
+    + studentId : int
+    + content : string
+    + submittedAt : Timestamp
+    + version : int
+    + status : SubmissionStatus
+    + rawMark : optional<double>
+    + daysLate : int
+    + lateDeduction : double
+    + finalMark : optional<double>
+    + feedback : string
+    + markedBy / moderatedBy / releasedBy : optional<int>
+    + markedAt / moderatedAt / releasedAt : optional<Timestamp>
+  }
+  class SubmissionLifecycle {
+    + {static} canTransition(from : SubmissionStatus, to : SubmissionStatus) : bool
+    + {static} requireTransition(from : SubmissionStatus, to : SubmissionStatus) : void
+    + {static} isMarkable(s : SubmissionStatus) : bool
+    + {static} isVisibleToStudent(s : SubmissionStatus) : bool
+  }
+  class MarkAuditEntry <<struct>> {
+    + id : int
+    + submissionId : int
+    + changedBy : int
+    + changedAt : Timestamp
+    + action : AuditAction
+    + oldMark : optional<double>
+    + newMark : optional<double>
+    + reason : string
+  }
+  class Notification <<struct>> {
+    + id : int
+    + userId : int
+    + message : string
+    + createdAt : Timestamp
+    + read : bool
+  }
+
+  Department "1" -- "0..*" Course
+  Course "1" -- "0..*" Assignment
+  Assignment "1" -- "0..*" Extension
+  Assignment "1" -- "0..*" Submission
+  Submission "1" *-- "1..*" MarkAuditEntry : audit trail >
+  Submission --> SubmissionStatus
+  SubmissionLifecycle ..> SubmissionStatus
+}
+
+package "policy  <<Strategy>>" {
+  interface ILatePenaltyPolicy {
+    + {abstract} apply(rawMark : double, maxMark : int, daysLate : int) : PenaltyResult
+    + {abstract} description() : string
+  }
+  class PercentPerDayPenaltyPolicy {
+    - percentPerDay_ : double
+    - maxPenalisedDays_ : int
+    + PercentPerDayPenaltyPolicy(percentPerDay : double = 10, maxPenalisedDays : int = 3)
+    + apply(rawMark : double, maxMark : int, daysLate : int) : PenaltyResult
+    + description() : string
+  }
+  class NoLatePenaltyPolicy {
+    + apply(rawMark : double, maxMark : int, daysLate : int) : PenaltyResult
+    + description() : string
+  }
+  class PenaltyResult <<struct>> {
+    + rawMark : double
+    + daysLate : int
+    + deduction : double
+    + finalMark : double
+    + explanation : string
+  }
+  class LatenessCalculator {
+    + {static} daysLate(submittedAt : Timestamp, effectiveDeadline : Timestamp) : int
+  }
+  ILatePenaltyPolicy <|.. PercentPerDayPenaltyPolicy
+  ILatePenaltyPolicy <|.. NoLatePenaltyPolicy
+  ILatePenaltyPolicy ..> PenaltyResult
+}
+
+@enduml

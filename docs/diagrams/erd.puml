@@ -1,0 +1,140 @@
+@startuml erd
+!pragma layout smetana
+title Entity-Relationship Diagram (3NF, schema version 1)
+hide circle
+skinparam linetype ortho
+skinparam class {
+  BackgroundColor #FBFCFF
+  BorderColor #1F3864
+}
+
+entity department {
+  * department_id : INTEGER <<PK>>
+  --
+  * name : TEXT <<UNIQUE NOCASE>>
+}
+
+entity app_user {
+  * user_id : INTEGER <<PK>>
+  --
+  * username : TEXT <<UNIQUE NOCASE>>
+  * password_hash : TEXT  (Argon2id)
+  * full_name : TEXT
+  * role : TEXT {ADMIN, LECTURER, HOD, STUDENT}
+  department_id : INTEGER <<FK>>
+  * is_active : INTEGER {0,1}
+  * failed_login_attempts : INTEGER
+  * locked_until : INTEGER
+  * created_at : INTEGER
+}
+
+entity course {
+  * course_id : INTEGER <<PK>>
+  --
+  * code : TEXT <<UNIQUE NOCASE>>
+  * title : TEXT
+  * department_id : INTEGER <<FK>>
+}
+
+entity course_lecturer {
+  * course_id : INTEGER <<PK, FK>>
+  * lecturer_id : INTEGER <<PK, FK>>
+}
+
+entity enrolment {
+  * course_id : INTEGER <<PK, FK>>
+  * student_id : INTEGER <<PK, FK>>
+  --
+  * enrolled_at : INTEGER
+}
+
+entity assignment {
+  * assignment_id : INTEGER <<PK>>
+  --
+  * course_id : INTEGER <<FK>>
+  * title : TEXT
+  * description : TEXT
+  * deadline : INTEGER
+  * max_mark : INTEGER {1..1000}
+  * created_by : INTEGER <<FK>>
+  * created_at : INTEGER
+}
+
+entity extension {
+  * extension_id : INTEGER <<PK>>
+  --
+  * assignment_id : INTEGER <<FK>>
+  * student_id : INTEGER <<FK>>
+  * new_deadline : INTEGER
+  * reason : TEXT
+  * granted_by : INTEGER <<FK>>
+  * granted_at : INTEGER
+  UNIQUE(assignment_id, student_id)
+}
+
+entity submission {
+  * submission_id : INTEGER <<PK>>
+  --
+  * assignment_id : INTEGER <<FK>>
+  * student_id : INTEGER <<FK>>
+  * content : TEXT
+  * submitted_at : INTEGER
+  * version : INTEGER
+  * status : TEXT {SUBMITTED, LATE, MARKED, MODERATED, RELEASED}
+  raw_mark : REAL
+  * days_late : INTEGER
+  * late_deduction : REAL
+  final_mark : REAL
+  feedback : TEXT
+  marked_by / moderated_by / released_by : INTEGER <<FK>>
+  marked_at / moderated_at / released_at : INTEGER
+  UNIQUE(assignment_id, student_id)
+}
+
+entity submission_version {
+  * submission_id : INTEGER <<PK, FK>>
+  * version : INTEGER <<PK>>
+  --
+  * content : TEXT
+  * submitted_at : INTEGER
+}
+
+entity mark_audit {
+  * audit_id : INTEGER <<PK>>
+  --
+  * submission_id : INTEGER <<FK>>
+  * changed_by : INTEGER <<FK>>
+  * changed_at : INTEGER
+  * action : TEXT
+  old_mark : REAL
+  new_mark : REAL
+  * reason : TEXT
+  (append-only: triggers block UPDATE/DELETE)
+}
+
+entity notification {
+  * notification_id : INTEGER <<PK>>
+  --
+  * user_id : INTEGER <<FK>>
+  * message : TEXT
+  * created_at : INTEGER
+  * is_read : INTEGER
+}
+
+department ||--o{ app_user : "employs / belongs to"
+department ||--o{ course : offers
+course ||--o{ course_lecturer
+app_user ||--o{ course_lecturer : teaches
+course ||--o{ enrolment
+app_user ||--o{ enrolment : "enrolled as student"
+course ||--o{ assignment : has
+app_user ||--o{ assignment : creates
+assignment ||--o{ extension : has
+app_user ||--o{ extension : "receives / grants"
+assignment ||--o{ submission : receives
+app_user ||--o{ submission : "submits / marks / moderates / releases"
+submission ||--|{ submission_version : "has versions"
+submission ||--o{ mark_audit : "audited by"
+app_user ||--o{ mark_audit : changes
+app_user ||--o{ notification : receives
+@enduml

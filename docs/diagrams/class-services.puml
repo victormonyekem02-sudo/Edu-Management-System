@@ -1,0 +1,119 @@
+@startuml class-services
+!pragma layout smetana
+title Class Diagram (2/3) - services, Observer and dependencies on abstractions
+skinparam classAttributeIconSize 0
+skinparam class {
+  BackgroundColor #FBFCFF
+  BorderColor #1F3864
+}
+left to right direction
+hide empty members
+
+abstract class User
+class UserFactory <<Factory>>
+interface ILatePenaltyPolicy
+class LatenessCalculator
+class SubmissionLifecycle
+interface IPasswordHasher
+interface IUserRepository
+interface ISubmissionRepository
+interface IAuditRepository
+interface ITransactionRunner
+class Database
+package "events  <<Observer>>" {
+  interface ISubmissionObserver {
+    + {abstract} onSubmissionEvent(event : const SubmissionEvent&) : void
+  }
+  class SubmissionEventPublisher {
+    - observers_ : vector<ISubmissionObserver*>
+    + subscribe(o : ISubmissionObserver&) : void
+    + unsubscribe(o : ISubmissionObserver&) : void
+    + publish(event : const SubmissionEvent&) : void
+  }
+  SubmissionEventPublisher o-- "0..*" ISubmissionObserver
+}
+
+package "services" {
+  class AuthService {
+    + {static} kMaxFailedAttempts : int = 5
+    + login(username : string, password : string) : unique_ptr<User>
+    + changePassword(actor : const User&, current : string, next : string) : void
+  }
+  class AdminService {
+    + createUser(actor : const User&, role : Role, username : string, fullName : string, password : string, dept : optional<int>) : int
+    + setActive(actor : const User&, userId : int, active : bool) : void
+    + createDepartment(actor : const User&, name : string) : int
+    + createCourse(actor : const User&, code : string, title : string, dept : int) : int
+    + assignLecturer(actor : const User&, courseId : int, lecturerId : int) : void
+    + enrolStudent(actor : const User&, courseId : int, studentId : int) : void
+  }
+  class AssignmentService {
+    + createAssignment(actor : const User&, courseId : int, title : string, description : string, deadline : Timestamp, maxMark : int) : int
+    + grantExtension(actor : const User&, assignmentId : int, studentId : int, newDeadline : Timestamp, reason : string) : void
+    + effectiveDeadline(a : const Assignment&, studentId : int) : Timestamp
+    + listForStudent(student : const User&) : vector<StudentAssignmentView>
+  }
+  class SubmissionService {
+    + submit(actor : const User&, assignmentId : int, content : string) : SubmitResult
+    + resultsFor(student : const User&) : vector<StudentResultView>
+  }
+  class MarkingService {
+    + mark(actor : const User&, submissionId : int, rawMark : double, feedback : string, reason : string) : PenaltyResult
+    + listForAssignment(actor : const User&, assignmentId : int) : vector<MarkingItem>
+  }
+  class ModerationService {
+    + pendingModeration(hod : const User&) : vector<ModerationItem>
+    + approve(hod : const User&, submissionId : int, note : string) : void
+    + adjust(hod : const User&, submissionId : int, newFinalMark : double, reason : string) : void
+    + releaseAssignment(hod : const User&, assignmentId : int) : ReleaseSummary
+    + auditTrail(actor : const User&, submissionId : int) : vector<MarkAuditEntry>
+  }
+  class NotificationService {
+    + onSubmissionEvent(event : const SubmissionEvent&) : void
+    + unreadFor(user : const User&) : vector<Notification>
+  }
+  class DirectoryService {
+    + findUser(id : int) : optional<UserSummary>
+    + findUserByUsername(name : string) : optional<UserSummary>
+    + lecturersOf(courseId : int) : vector<UserSummary>
+    + displayName(userId : int) : string
+  }
+  DirectoryService --> IUserRepository
+  class LmsSystem <<composition root>> {
+    + {static} createDefault(databasePath : string) : unique_ptr<LmsSystem>
+  }
+
+  ISubmissionObserver <|.. NotificationService
+  AuthService --> IUserRepository
+  AuthService --> IPasswordHasher
+  AuthService ..> UserFactory
+  AdminService --> IPasswordHasher
+  SubmissionService --> AssignmentService
+  MarkingService --> AssignmentService
+  MarkingService --> "1" ILatePenaltyPolicy : penaltyPolicy_
+  MarkingService ..> LatenessCalculator
+  SubmissionService --> SubmissionEventPublisher
+  MarkingService --> SubmissionEventPublisher
+  ModerationService --> SubmissionEventPublisher
+  AssignmentService --> SubmissionEventPublisher
+  SubmissionService --> ISubmissionRepository
+  MarkingService --> IAuditRepository
+  ModerationService --> IAuditRepository
+  MarkingService --> ITransactionRunner
+  ModerationService --> ITransactionRunner
+  SubmissionService ..> SubmissionLifecycle
+  MarkingService ..> SubmissionLifecycle
+  ModerationService ..> SubmissionLifecycle
+  LmsSystem *-- "1" AuthService
+  LmsSystem *-- "1" AdminService
+  LmsSystem *-- "1" AssignmentService
+  LmsSystem *-- "1" SubmissionService
+  LmsSystem *-- "1" MarkingService
+  LmsSystem *-- "1" ModerationService
+  LmsSystem *-- "1" NotificationService
+  LmsSystem *-- "1" DirectoryService
+  LmsSystem *-- "1" Database
+}
+
+AuthService ..> User : <<returns>>
+@enduml

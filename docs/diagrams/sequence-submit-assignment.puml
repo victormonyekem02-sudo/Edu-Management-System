@@ -1,0 +1,63 @@
+@startuml sequence-submit-assignment
+title Sequence Diagram - UC-01 Submit assignment (on time, resubmission and late paths)
+autonumber
+skinparam sequenceMessageAlign center
+actor Student
+participant ":StudentMenu" as UI
+participant ":SubmissionService" as SS
+participant ":AssignmentService" as AS
+participant ":IAssignmentRepository" as AR
+participant ":ICourseRepository" as CR
+participant ":ISubmissionRepository" as SR
+participant ":ITransactionRunner" as TX
+participant ":SubmissionEventPublisher" as EP
+participant ":NotificationService" as NS
+
+Student -> UI : choose "Submit or resubmit work",\nassignment id, content
+UI -> SS : submit(student, assignmentId, content)
+SS -> SS : student.require(SubmitWork)
+SS -> AR : findById(assignmentId)
+AR --> SS : assignment
+SS -> CR : isEnrolled(courseId, studentId)
+CR --> SS : true
+SS -> SS : requireText(content)
+SS -> AS : effectiveDeadline(assignment, studentId)
+AS -> AR : findExtension(assignmentId, studentId)
+AR --> AS : extension?
+AS --> SS : deadline = max(deadline, extension)
+SS -> SS : late = clock.now() > deadline
+SS -> SR : find(assignmentId, studentId)
+SR --> SS : existing?
+
+alt no previous submission
+  SS -> TX : run(work)
+  activate TX
+  alt late == false
+    TX -> SR : add(status = SUBMITTED, version = 1)
+  else late == true  (late work is accepted, BR-04)
+    TX -> SR : add(status = LATE, version = 1)
+  end
+  TX -> SR : addVersion(id, 1, content, now)
+  deactivate TX
+else resubmission (existing, not yet marked)
+  alt late == false
+    SS -> TX : run(work)
+    activate TX
+    TX -> SR : update(content, version + 1, status = SUBMITTED)
+    TX -> SR : addVersion(id, version, content, now)
+    deactivate TX
+  else late == true
+    SS --> UI : throw BusinessRuleError("deadline has passed")
+    UI --> Student : [ERROR] ... previous submission kept
+  end
+else already marked / moderated / released
+  SS --> UI : throw BusinessRuleError("already marked")
+  UI --> Student : [ERROR] message, session continues
+end
+
+SS -> EP : publish(Submitted | Resubmitted, late)
+EP -> NS : onSubmissionEvent(event)
+NS -> NS : notify each course lecturer
+SS --> UI : SubmitResult{status, version, late, deadline}
+UI --> Student : "Submitted on time" | "Resubmitted (version n)" |\n"Submitted LATE" + penalty rule
+@enduml

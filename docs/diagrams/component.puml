@@ -1,0 +1,102 @@
+@startuml component
+!pragma layout smetana
+title Moderated LMS - Component Diagram (layered architecture)
+skinparam componentStyle uml2
+skinparam component {
+  BackgroundColor #F8FAFF
+  BorderColor #1F3864
+}
+
+package "Presentation layer  (app/, target lms_ui)" {
+  [Application] as App
+  [RoleMenu\n(Admin / Lecturer / HoD / Student)] as Menus
+  [ConsoleIO] as IO
+}
+
+package "Business-logic layer  (lib/services, lib/domain, lib/policy)" {
+  [LmsSystem\n(composition root)] as Sys
+  [AuthService] as Auth
+  [AdminService] as AdminS
+  [AssignmentService] as AsgS
+  [SubmissionService] as SubS
+  [MarkingService] as MarkS
+  [ModerationService] as ModS
+  [NotificationService] as NotS
+  [DirectoryService] as DirS
+  [Domain model\n(User hierarchy, Submission life cycle)] as Domain
+  [Late-penalty policy\n(Strategy)] as Policy
+  [Event publisher\n(Observer)] as Events
+}
+
+package "Security (lib/security)" {
+  [Argon2idPasswordHasher] as Hasher
+}
+
+package "Data-access layer  (lib/data)" {
+  interface "IUserRepository\nICourseRepository\nIAssignmentRepository\nISubmissionRepository\nIAuditRepository\nIDepartmentRepository\nINotificationRepository" as IRepo
+  interface "ITransactionRunner" as ITx
+  [Sqlite*Repository] as Repos
+  [Database / Statement\n(RAII, prepared statements)] as DB
+  [SchemaMigrator] as Mig
+}
+
+database "lms.db\n(SQLite 3.46, WAL)" as File
+[SQLite library] as SQLite <<third party>>
+[Argon2 reference library] as Argon <<third party>>
+
+App --> Menus
+Menus --> IO
+App --> Sys
+Menus --> Auth
+Menus --> AdminS
+Menus --> AsgS
+Menus --> SubS
+Menus --> MarkS
+Menus --> ModS
+Menus --> NotS
+Menus --> DirS
+
+Sys ..> Auth : creates
+Auth --> Hasher
+AdminS --> Hasher
+SubS --> AsgS
+MarkS --> AsgS
+MarkS --> Policy
+AsgS --> Events
+SubS --> Events
+MarkS --> Events
+ModS --> Events
+Events --> NotS : notifies
+Auth --> Domain
+AdminS --> Domain
+SubS --> Domain
+MarkS --> Domain
+ModS --> Domain
+
+Auth --> IRepo
+AdminS --> IRepo
+AsgS --> IRepo
+SubS --> IRepo
+MarkS --> IRepo
+ModS --> IRepo
+NotS --> IRepo
+DirS --> IRepo
+AsgS --> ITx
+SubS --> ITx
+MarkS --> ITx
+ModS --> ITx
+
+Repos -up- IRepo
+Repos -up- ITx
+Repos --> DB
+Mig --> DB
+DB --> SQLite
+SQLite --> File
+Hasher --> Argon
+
+note bottom of IRepo
+  Services depend only on these interfaces
+  (Dependency Inversion). All SQL is inside
+  the Sqlite*Repository classes.
+end note
+@enduml

@@ -1,0 +1,4 @@
+AT-01     PASS IT officer: first run on an empty database, offline, creates administrator
+AT-02/03  PASS Principal + HoD: late work is penalised and no mark is visible before release
+AT-04     PASS Student representative: resubmit before deadline, late work accepted
+AT-05     PASS Lecturer: individual extension removes the late status for that student only

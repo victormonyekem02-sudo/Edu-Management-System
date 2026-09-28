@@ -1,0 +1,82 @@
+@startgantt gantt
+title Moderated LMS - Project schedule (Waterfall, 7 weeks) - critical path in red
+printscale daily zoom 2
+Project starts 2026-09-21
+saturday are closed
+sunday are closed
+
+-- Phase 1: Planning and management --
+[T1.1 Feasibility study] as [FS] lasts 2 days
+[T1.2 WBS and schedule] as [WBS] lasts 1 day
+[WBS] starts at [FS]'s end
+[T1.3 Risk register] as [RISK] lasts 1 day
+[RISK] starts at [FS]'s end
+[M1 Project plan approved] happens at [WBS]'s end
+
+-- Phase 2: Requirements engineering --
+[T2.1 Stakeholder analysis and conflicts] as [SA] lasts 2 days
+[SA] starts at [WBS]'s end
+[T2.2 SRS (FR, NFR, business rules)] as [SRS] lasts 3 days
+[SRS] starts at [SA]'s end
+[T2.3 Use case model and 3 specifications] as [UC] lasts 2 days
+[UC] starts at [SA]'s end
+[G1 Gate 1 - requirements review] happens at [SRS]'s end
+
+-- Phase 3: System design --
+[T3.1 Architecture and component diagram] as [ARCH] lasts 2 days
+[ARCH] starts at [SRS]'s end
+[T3.2 Class diagram and patterns] as [CLS] lasts 3 days
+[CLS] starts at [ARCH]'s end
+[T3.3 Behavioural models] as [BEH] lasts 2 days
+[BEH] starts at [ARCH]'s end
+[T3.4 ERD, data dictionary, SQL schema] as [DBD] lasts 2 days
+[DBD] starts at [ARCH]'s end
+[G2 Gate 2 - design review] happens at [CLS]'s end
+
+-- Phase 4: Implementation --
+[T4.1 Build system, CI, data layer] as [IMP1] lasts 3 days
+[IMP1] starts at [CLS]'s end
+[T4.2 Domain and services] as [IMP2] lasts 4 days
+[IMP2] starts at [IMP1]'s end
+[T4.3 Console UI] as [IMP3] lasts 3 days
+[IMP3] starts at [IMP2]'s end
+
+-- Phase 5: Verification and validation --
+[T5.1 Test plan] as [TP] lasts 2 days
+[TP] starts at [CLS]'s end
+[T5.2 Unit and integration tests] as [UT] lasts 3 days
+[UT] starts at [IMP2]'s end
+[T5.3 System and acceptance tests, defect log] as [ST] lasts 3 days
+[ST] starts at [IMP3]'s end
+[G3 Gate 3 - test readiness review] happens at [ST]'s end
+
+-- Phase 6: CM and QA --
+[T6.1 Static analysis, metrics, code review] as [QA] lasts 2 days
+[QA] starts at [IMP3]'s end
+
+-- Phase 7: Deployment --
+[T7.1 Packaging, installation guide, manuals] as [DEP] lasts 2 days
+[DEP] starts at [ST]'s end
+[M2 Release v1.0] happens at [DEP]'s end
+
+-- Phase 8: Maintenance and completion --
+[T8.1 CR1 analysis, implementation, regression] as [CR1] lasts 3 days
+[CR1] starts at [DEP]'s end
+[M3 Release v1.1] happens at [CR1]'s end
+[T9.1 Professional issues and final report] as [REP] lasts 3 days
+[REP] starts at [DEP]'s end
+[M4 Report submitted / viva] happens at [REP]'s end
+
+[FS] is colored in Salmon
+[WBS] is colored in Salmon
+[SA] is colored in Salmon
+[SRS] is colored in Salmon
+[ARCH] is colored in Salmon
+[CLS] is colored in Salmon
+[IMP1] is colored in Salmon
+[IMP2] is colored in Salmon
+[IMP3] is colored in Salmon
+[ST] is colored in Salmon
+[DEP] is colored in Salmon
+[CR1] is colored in Salmon
+@endgantt
