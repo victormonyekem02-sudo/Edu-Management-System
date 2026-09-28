@@ -99,6 +99,29 @@ TEST_F(AuthTest, AdministratorResetUnlocksAccount) {
     EXPECT_NO_THROW(auth().login("student", "NewPass2026"));
 }
 
+/// Counts verify() calls so the timing-equalisation fix (review finding R1) can be tested.
+class CountingHasher : public IPasswordHasher {
+public:
+    std::string hash(const std::string& p) const override { return inner_.hash(p); }
+    bool verify(const std::string& p, const std::string& h) const override {
+        ++verifications;
+        return inner_.verify(p, h);
+    }
+    mutable int verifications = 0;
+
+private:
+    Argon2idPasswordHasher inner_{Argon2Params::fastForTesting()};
+};
+
+TEST_F(AuthTest, UnknownUserCostsTheSameHashVerificationAsKnownUser) {
+    CountingHasher hasher;
+    AuthService service(school.sys->repositories().users, hasher, *school.clock);
+    EXPECT_THROW(service.login("nobody", "WrongPass1"), AuthenticationError);
+    EXPECT_EQ(hasher.verifications, 1);
+    EXPECT_THROW(service.login("student", "WrongPass1"), AuthenticationError);
+    EXPECT_EQ(hasher.verifications, 2);
+}
+
 TEST_F(AuthTest, ChangePasswordRequiresCurrentPasswordAndPolicy) {
     EXPECT_THROW(auth().changePassword(*school.student, "WrongPass1", "Another2026"),
                  AuthenticationError);

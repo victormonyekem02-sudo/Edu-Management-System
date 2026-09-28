@@ -8,7 +8,7 @@
 #include "lms/common/TextUtil.h"
 #include "lms/common/TimeUtil.h"
 
-#if defined(_WIN32)
+#ifdef _WIN32
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
 #endif
@@ -32,9 +32,9 @@ public:
         if (!active_) {
             return;
         }
-#if defined(_WIN32)
+#ifdef _WIN32
         handle_ = GetStdHandle(STD_INPUT_HANDLE);
-        if (handle_ == INVALID_HANDLE_VALUE || !GetConsoleMode(handle_, &oldMode_)) {
+        if (handle_ == INVALID_HANDLE_VALUE || GetConsoleMode(handle_, &oldMode_) == 0) {
             active_ = false;
             return;
         }
@@ -53,7 +53,7 @@ public:
         if (!active_) {
             return;
         }
-#if defined(_WIN32)
+#ifdef _WIN32
         SetConsoleMode(handle_, oldMode_);
 #else
         tcsetattr(STDIN_FILENO, TCSANOW, &old_);
@@ -61,10 +61,12 @@ public:
     }
     EchoGuard(const EchoGuard&) = delete;
     EchoGuard& operator=(const EchoGuard&) = delete;
+    EchoGuard(EchoGuard&&) = delete;
+    EchoGuard& operator=(EchoGuard&&) = delete;
 
 private:
     bool active_;
-#if defined(_WIN32)
+#ifdef _WIN32
     HANDLE handle_ = nullptr;
     DWORD oldMode_ = 0;
 #else
@@ -179,7 +181,7 @@ std::string ConsoleIO::readPassword(const std::string& prompt) {
     out_ << prompt << ": " << std::flush;
     std::string value;
     {
-        EchoGuard guard(interactive_);
+        const EchoGuard guard(interactive_);
         value = nextLine();
     }
     if (interactive_) {
@@ -207,7 +209,7 @@ std::string ConsoleIO::readMultiline(const std::string& prompt) {
     out_ << prompt << " (finish with a line containing only '.'):\n";
     std::string result;
     for (;;) {
-        std::string line = nextLine();
+        const std::string line = nextLine();
         if (line == ".") {
             break;
         }
@@ -246,7 +248,7 @@ void ConsoleIO::table(const std::vector<std::string>& headers,
     };
     printRow(headers);
     std::size_t total = 0;
-    for (std::size_t w : widths) {
+    for (const std::size_t w : widths) {
         total += w + 2;
     }
     out_ << std::string(total > 2 ? total - 2 : total, '-') << '\n';

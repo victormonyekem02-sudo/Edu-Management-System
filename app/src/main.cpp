@@ -7,7 +7,7 @@
 #include "lms/ui/Application.h"
 #include "lms/ui/ConsoleIO.h"
 
-#if defined(_WIN32)
+#ifdef _WIN32
 #include <io.h>
 #define LMS_ISATTY _isatty
 #define LMS_FILENO _fileno
@@ -28,12 +28,18 @@ void printUsage() {
 
 }  // namespace
 
+// The signature of main is fixed by the C++ standard.
+// cppcheck-suppress constParameter
 int main(int argc, char* argv[]) {
     std::string databasePath = "lms.db";
     bool seedDemo = false;
     for (int i = 1; i < argc; ++i) {
         const std::string arg = argv[i];
-        if (arg == "--db" && i + 1 < argc) {
+        if (arg == "--db") {
+            if (i + 1 >= argc) {
+                std::cerr << "--db needs a file name.\n";
+                return 2;
+            }
             databasePath = argv[++i];
         } else if (arg == "--seed-demo") {
             seedDemo = true;

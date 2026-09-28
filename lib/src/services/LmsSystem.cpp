@@ -7,7 +7,8 @@ namespace lms {
 LmsSystem::LmsSystem(const std::string& databasePath, std::unique_ptr<IClock> clock,
                      std::unique_ptr<IPasswordHasher> hasher,
                      std::unique_ptr<ILatePenaltyPolicy> penaltyPolicy)
-    : db_(databasePath),
+    : databasePath_(databasePath),
+      db_(databasePath),
       clock_(std::move(clock)),
       hasher_(std::move(hasher)),
       penaltyPolicy_(std::move(penaltyPolicy)),

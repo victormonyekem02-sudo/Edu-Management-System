@@ -120,8 +120,10 @@ std::string Statement::columnText(int column) const {
     if (text == nullptr) {
         return {};
     }
-    return std::string(reinterpret_cast<const char*>(text),
-                       static_cast<std::size_t>(sqlite3_column_bytes(stmt_, column)));
+    // SQLite's C API returns UTF-8 text as unsigned char*; this is the documented conversion.
+    // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
+    return {reinterpret_cast<const char*>(text),
+            static_cast<std::size_t>(sqlite3_column_bytes(stmt_, column))};
 }
 
 std::optional<int> Statement::columnOptionalInt(int column) const {
@@ -180,7 +182,7 @@ void Database::execute(const std::string& sql) {
 }
 
 Statement Database::prepare(const std::string& sql) {
-    return Statement(db_, sql);
+    return {db_, sql};
 }
 
 std::int64_t Database::lastInsertId() const {
@@ -217,8 +219,9 @@ void Database::inTransaction(const std::function<void()>& work) {
         try {
             execute("ROLLBACK TO SAVEPOINT " + name + ";");
             execute("RELEASE SAVEPOINT " + name + ";");
-        } catch (...) {
-            // The original exception is more useful to the caller than a rollback error.
+        } catch (...) {  // NOLINT(bugprone-empty-catch)
+            // Deliberately swallowed: the original exception (rethrown below) explains the
+            // failure; a secondary rollback error would hide it.
         }
         --savepointDepth_;
         throw;

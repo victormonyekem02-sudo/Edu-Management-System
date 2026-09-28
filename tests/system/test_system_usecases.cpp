@@ -3,6 +3,8 @@
 // what the user would see. IDs match docs/07-testing/test-plan.md section 6.
 #include <gtest/gtest.h>
 
+#include <filesystem>
+#include <fstream>
 #include <sstream>
 
 #include "TestSchool.h"
@@ -267,6 +269,50 @@ TEST_F(SystemTest, ST24_AccountLocksAfterFiveFailures) {
     const RunResult r = run(script);
     EXPECT_TRUE(has(r.output, "temporarily locked")) << r.output;
     EXPECT_FALSE(has(r.output, "Student menu"));
+}
+
+// ---- File submission (review finding R3) -------------------------------------------------
+
+std::string writeTempFile(const std::string& name, const std::string& content) {
+    const auto path = std::filesystem::temp_directory_path() / name;
+    std::ofstream(path, std::ios::binary) << content;
+    return path.string();
+}
+
+TEST_F(SystemTest, ST25_SubmitFileByPath) {
+    const std::string path = writeTempFile("lms_st25_essay.txt", "Essay from a file\nLine 2");
+    const RunResult r = run(login("student") + "3\n1\n@" + path + "\n.\n" + kLogoutAndExit);
+    EXPECT_TRUE(has(r.output, "[OK] Submitted on time.")) << r.output;
+    EXPECT_EQ(school.sys->submissions().findOwn(*school.student, school.assignment)->content,
+              "Essay from a file\nLine 2");
+    std::filesystem::remove(path);
+}
+
+TEST_F(SystemTest, ST26_MissingOrOversizedFileIsRejected) {
+    const std::string big =
+        writeTempFile("lms_st26_big.txt", std::string(SubmissionService::kMaxContentLength + 1, 'x'));
+    const RunResult r = run(login("student") + "3\n1\n@no_such_file.txt\n.\n3\n1\n@" + big +
+                            "\n.\n" + kLogoutAndExit);
+    EXPECT_TRUE(has(r.output, "is not a file that can be submitted")) << r.output;
+    EXPECT_TRUE(has(r.output, "The file is too large")) << r.output;
+    EXPECT_FALSE(school.sys->submissions().findOwn(*school.student, school.assignment));
+    std::filesystem::remove(big);
+}
+
+TEST(SystemFileDb, ST27_DatabaseFileCannotBeSubmitted) {
+    const std::string db = (std::filesystem::temp_directory_path() / "lms_st27.db").string();
+    for (const char* suffix : {"", "-wal", "-shm"}) {
+        std::filesystem::remove(db + suffix);
+    }
+    {
+        TestSchool school(std::make_unique<PercentPerDayPenaltyPolicy>(), nullptr, db);
+        const RunResult r =
+            runApp(*school.sys, login("student") + "3\n1\n@" + db + "\n.\n" + kLogoutAndExit);
+        EXPECT_TRUE(has(r.output, "[ERROR] That file cannot be submitted.")) << r.output;
+    }
+    for (const char* suffix : {"", "-wal", "-shm"}) {
+        std::filesystem::remove(db + suffix);
+    }
 }
 
 }  // namespace

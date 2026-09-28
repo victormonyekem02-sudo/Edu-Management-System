@@ -59,11 +59,8 @@ std::string statusDisplayName(SubmissionStatus s) {
 bool SubmissionLifecycle::canTransition(SubmissionStatus from, SubmissionStatus to) {
     using S = SubmissionStatus;
     switch (from) {
-        case S::Submitted:
-            // resubmission keeps SUBMITTED; marking moves on
-            return to == S::Submitted || to == S::Marked;
-        case S::Late:
-            // an extension may retrospectively cover the submission
+        case S::Submitted:  // resubmission keeps SUBMITTED; marking moves on
+        case S::Late:       // an extension may retrospectively cover the submission
             return to == S::Submitted || to == S::Marked;
         case S::Marked:
             // re-mark, or HoD approves/adjusts

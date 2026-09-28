@@ -69,7 +69,8 @@ int AdminService::createUser(const User& actor, Role role, const std::string& us
     if (departmentId && !repos_.departments.findById(*departmentId)) {
         throw NotFoundError("Department " + std::to_string(*departmentId) + " does not exist.");
     }
-    if (role == Role::HeadOfDepartment && repos_.users.findHeadOfDepartment(*departmentId)) {
+    if (role == Role::HeadOfDepartment && departmentId &&
+        repos_.users.findHeadOfDepartment(*departmentId)) {
         throw BusinessRuleError("That department already has an active Head of Department.");
     }
     record.departmentId = departmentId;
