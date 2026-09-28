@@ -1,0 +1,9 @@
+// GENERATED FILE - do not edit. Produced by lib/CMakeLists.txt from sql/NNN_*.sql.
+#pragma once
+
+namespace lms::generated {
+
+inline constexpr const char* kMigrations[] = {
+@LMS_MIGRATIONS_CPP@};
+
+}  // namespace lms::generated
