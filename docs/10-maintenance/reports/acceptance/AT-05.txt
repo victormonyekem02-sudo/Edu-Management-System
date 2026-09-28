@@ -1,0 +1,144 @@
+AT-05 - Lecturer: individual extension removes the late status for that student only
+Result: PASS
+Exit code: 0
+Missing expectations: []
+
+----- transcript -----
+Demo data created. Every demo account uses the password 'Passw0rd2026'.
+
+Moderated Learning Management System v1.1.0
+===========================================
+
+1. Log in
+0. Exit
+Choose an option: Username: Password: 
+Welcome, Lineo Ramatla (Lecturer)
+=================================
+
+Lecturer menu
+=============
+1. My courses and assignments
+2. Create an assignment
+3. View submissions for an assignment
+4. Mark or re-mark a submission
+5. Grant an individual extension
+6. Extend the deadline for the whole class
+7. View extensions for an assignment
+8. View all my notifications
+9. Change my password
+0. Log out
+Choose an option: Course  Assign. ID  Title                 Deadline          Max mark
+--------------------------------------------------------------------
+MAT101  1           Algebra homework 1    2026-09-26 11:37  25
+MAT101  2           Geometry project      2026-10-05 11:37  50
+PHY101  -           (no assignments yet)                    
+Assignment ID: Student username: New deadline for this student (YYYY-MM-DD HH:MM): Reason: [OK] Extension granted to Kamohelo Tau until 2026-10-01 11:37.
+
+Lecturer menu
+=============
+1. My courses and assignments
+2. Create an assignment
+3. View submissions for an assignment
+4. Mark or re-mark a submission
+5. Grant an individual extension
+6. Extend the deadline for the whole class
+7. View extensions for an assignment
+8. View all my notifications
+9. Change my password
+0. Log out
+Choose an option: [i] Logged out.
+
+1. Log in
+0. Exit
+Choose an option: Username: Password: 
+Welcome, Kamohelo Tau (Student)
+===============================
+
+New notifications
+=================
+When                   Message
+-------------------------------------------------------------------------------------------------------------------
+2026-09-28 11:37  NEW  You have been granted an extension for 'Algebra homework 1' (MAT101) until 2026-10-01 11:37.
+
+Student menu
+============
+1. My courses
+2. My assignments and deadlines
+3. Submit or resubmit work
+4. My results and feedback
+5. View all my notifications
+6. Change my password
+0. Log out
+Choose an option: ID  Course  Assignment           Original deadline  Your deadline     Extension   Time                  Max  Status
+--------------------------------------------------------------------------------------------------------------------------
+1   MAT101  Algebra homework 1   2026-09-26 11:37   2026-10-01 11:37  individual  2 days 23 hours left  25   Not submitted
+3   ENG101  Essay: My community  2026-10-01 11:37   2026-10-01 11:37  -           2 days 23 hours left  40   Not submitted
+2   MAT101  Geometry project     2026-10-05 11:37   2026-10-05 11:37  -           6 days 23 hours left  50   Not submitted
+
+Student menu
+============
+1. My courses
+2. My assignments and deadlines
+3. Submit or resubmit work
+4. My results and feedback
+5. View all my notifications
+6. Change my password
+0. Log out
+Choose an option: ID  Course  Assignment           Original deadline  Your deadline     Extension   Time                  Max  Status
+--------------------------------------------------------------------------------------------------------------------------
+1   MAT101  Algebra homework 1   2026-09-26 11:37   2026-10-01 11:37  individual  2 days 23 hours left  25   Not submitted
+3   ENG101  Essay: My community  2026-10-01 11:37   2026-10-01 11:37  -           2 days 23 hours left  40   Not submitted
+2   MAT101  Geometry project     2026-10-05 11:37   2026-10-05 11:37  -           6 days 23 hours left  50   Not submitted
+Assignment ID: [i] Type your answer, or type @ followed by a file path (e.g. @C:\work\essay.txt).
+Your work (finish with a line containing only '.'):
+[OK] Submitted on time. You may resubmit until 2026-10-01 11:37.
+
+Student menu
+============
+1. My courses
+2. My assignments and deadlines
+3. Submit or resubmit work
+4. My results and feedback
+5. View all my notifications
+6. Change my password
+0. Log out
+Choose an option: [i] Logged out.
+
+1. Log in
+0. Exit
+Choose an option: Username: Password: 
+Welcome, Rethabile Phiri (Student)
+==================================
+
+Student menu
+============
+1. My courses
+2. My assignments and deadlines
+3. Submit or resubmit work
+4. My results and feedback
+5. View all my notifications
+6. Change my password
+0. Log out
+Choose an option: ID  Course  Assignment           Original deadline  Your deadline     Extension  Time                  Max  Status
+-------------------------------------------------------------------------------------------------------------------------
+1   MAT101  Algebra homework 1   2026-09-26 11:37   2026-09-26 11:37  -          deadline passed       25   Not submitted
+3   ENG101  Essay: My community  2026-10-01 11:37   2026-10-01 11:37  -          2 days 23 hours left  40   Not submitted
+2   MAT101  Geometry project     2026-10-05 11:37   2026-10-05 11:37  -          6 days 23 hours left  50   Not submitted
+Assignment ID: [i] Type your answer, or type @ followed by a file path (e.g. @C:\work\essay.txt).
+Your work (finish with a line containing only '.'):
+[OK] Submitted LATE. The deadline was 2026-09-26 11:37. Late penalty: 10% of the maximum mark per day late, up to 3 days; zero after that. Your work will still be marked and receive feedback.
+
+Student menu
+============
+1. My courses
+2. My assignments and deadlines
+3. Submit or resubmit work
+4. My results and feedback
+5. View all my notifications
+6. Change my password
+0. Log out
+Choose an option: [i] Logged out.
+
+1. Log in
+0. Exit
+Choose an option: Goodbye.

@@ -1,0 +1,100 @@
+AT-04 - Student representative: resubmit before deadline, late work accepted
+Result: PASS
+Exit code: 0
+Missing expectations: []
+
+----- transcript -----
+Demo data created. Every demo account uses the password 'Passw0rd2026'.
+
+Moderated Learning Management System v1.1.0
+===========================================
+
+1. Log in
+0. Exit
+Choose an option: Username: Password: 
+Welcome, Lerato Nthane (Student)
+================================
+
+Student menu
+============
+1. My courses
+2. My assignments and deadlines
+3. Submit or resubmit work
+4. My results and feedback
+5. View all my notifications
+6. Change my password
+0. Log out
+Choose an option: ID  Course  Assignment           Original deadline  Your deadline     Extension  Time                  Max  Status
+-------------------------------------------------------------------------------------------------------------------------
+1   MAT101  Algebra homework 1   2026-09-26 11:37   2026-09-26 11:37  -          deadline passed       25   Not submitted
+3   ENG101  Essay: My community  2026-10-01 11:37   2026-10-01 11:37  -          2 days 23 hours left  40   Not submitted
+2   MAT101  Geometry project     2026-10-05 11:37   2026-10-05 11:37  -          6 days 23 hours left  50   Not submitted
+Assignment ID: [i] Type your answer, or type @ followed by a file path (e.g. @C:\work\essay.txt).
+Your work (finish with a line containing only '.'):
+[OK] Submitted on time. You may resubmit until 2026-10-05 11:37.
+
+Student menu
+============
+1. My courses
+2. My assignments and deadlines
+3. Submit or resubmit work
+4. My results and feedback
+5. View all my notifications
+6. Change my password
+0. Log out
+Choose an option: ID  Course  Assignment           Original deadline  Your deadline     Extension  Time                  Max  Status
+-------------------------------------------------------------------------------------------------------------------------
+1   MAT101  Algebra homework 1   2026-09-26 11:37   2026-09-26 11:37  -          deadline passed       25   Not submitted
+3   ENG101  Essay: My community  2026-10-01 11:37   2026-10-01 11:37  -          2 days 23 hours left  40   Not submitted
+2   MAT101  Geometry project     2026-10-05 11:37   2026-10-05 11:37  -          6 days 23 hours left  50   Submitted
+Assignment ID: [i] Type your answer, or type @ followed by a file path (e.g. @C:\work\essay.txt).
+Your work (finish with a line containing only '.'):
+[OK] Resubmitted (version 2). Your previous version has been replaced.
+
+Student menu
+============
+1. My courses
+2. My assignments and deadlines
+3. Submit or resubmit work
+4. My results and feedback
+5. View all my notifications
+6. Change my password
+0. Log out
+Choose an option: ID  Course  Assignment           Original deadline  Your deadline     Extension  Time                  Max  Status
+--------------------------------------------------------------------------------------------------------------------------
+1   MAT101  Algebra homework 1   2026-09-26 11:37   2026-09-26 11:37  -          deadline passed       25   Not submitted
+3   ENG101  Essay: My community  2026-10-01 11:37   2026-10-01 11:37  -          2 days 23 hours left  40   Not submitted
+2   MAT101  Geometry project     2026-10-05 11:37   2026-10-05 11:37  -          6 days 23 hours left  50   Submitted (v2)
+Assignment ID: [i] Type your answer, or type @ followed by a file path (e.g. @C:\work\essay.txt).
+Your work (finish with a line containing only '.'):
+[OK] Submitted LATE. The deadline was 2026-09-26 11:37. Late penalty: 10% of the maximum mark per day late, up to 3 days; zero after that. Your work will still be marked and receive feedback.
+
+Student menu
+============
+1. My courses
+2. My assignments and deadlines
+3. Submit or resubmit work
+4. My results and feedback
+5. View all my notifications
+6. Change my password
+0. Log out
+Choose an option: ID  Course  Assignment           Original deadline  Your deadline     Extension  Time                  Max  Status
+--------------------------------------------------------------------------------------------------------------------------
+1   MAT101  Algebra homework 1   2026-09-26 11:37   2026-09-26 11:37  -          deadline passed       25   Submitted late
+3   ENG101  Essay: My community  2026-10-01 11:37   2026-10-01 11:37  -          2 days 23 hours left  40   Not submitted
+2   MAT101  Geometry project     2026-10-05 11:37   2026-10-05 11:37  -          6 days 23 hours left  50   Submitted (v2)
+
+Student menu
+============
+1. My courses
+2. My assignments and deadlines
+3. Submit or resubmit work
+4. My results and feedback
+5. View all my notifications
+6. Change my password
+0. Log out
+Choose an option: [i] Logged out.
+
+1. Log in
+0. Exit
+Choose an option: Goodbye.

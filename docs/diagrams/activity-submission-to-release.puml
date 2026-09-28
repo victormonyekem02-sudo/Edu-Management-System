@@ -29,7 +29,9 @@ endif
 :Notify course lecturer(s);
 |Lecturer|
 if (Student asks for more time\nwith a good reason?) then (yes)
-  :Grant individual extension\n(new deadline + reason);
+  :Grant individual extension, or extend
+  the deadline for the whole class (v1.1)
+  (new deadline + reason);
   |System|
   :Reclassify LATE -> SUBMITTED
   if covered by the extension;

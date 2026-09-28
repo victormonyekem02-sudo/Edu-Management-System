@@ -30,6 +30,7 @@ Source: [`docs/diagrams/use-case.puml`](../diagrams/use-case.puml)
 | UC-13 | Log in | User | FR-01, FR-02 |
 | UC-14 | Change password | User | FR-20 |
 | UC-15 | View notifications | User | FR-19 |
+| UC-16 | Grant class-wide extension *(v1.1)* | Lecturer | FR-22 |
 
 ---
 
@@ -51,7 +52,7 @@ Source: [`docs/diagrams/use-case.puml`](../diagrams/use-case.puml)
 2. The student enters the assignment ID.
 3. The student types the answer (ending with a line containing ".") or types `@` and a file path.
 4. The system checks that the student is enrolled and the work is not empty and not larger than 100 000 characters.
-5. The system determines the student's effective deadline (assignment deadline or individual extension, whichever is later).
+5. The system determines the student's effective deadline (the latest of the assignment deadline, the class-wide extension and the student's individual extension).
 6. The system finds no earlier submission and the current time is not after the effective deadline.
 7. The system stores the submission as SUBMITTED, version 1, and its content in the version history, in one transaction.
 8. The system notifies the lecturers of the course.
@@ -160,3 +161,4 @@ Source: [`docs/diagrams/use-case.puml`](../diagrams/use-case.puml)
 - **UC-12 View mark audit log** - HoD: per submission or whole department; Administrator: whole school.
 - **UC-13 Log in** - generic error on failure; lockout after 5 failures for 15 minutes; notifications shown after login; the menu depends on the role.
 - **UC-14 Change password**, **UC-15 View notifications** - available to every role.
+- **UC-16 Grant class-wide extension (v1.1, CR1)** - Lecturer selects one of their assignments, a new deadline later than the original and a reason. The deadline applies to every enrolled student (an individual extension that is even later still wins). Granting again replaces it. Refused once any submission of the assignment is moderated. Unmarked LATE submissions covered by the new deadline become SUBMITTED; all enrolled students are notified. «include» *Determine effective deadline*.

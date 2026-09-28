@@ -50,6 +50,9 @@ package "services" {
   class AssignmentService {
     + createAssignment(actor : const User&, courseId : int, title : string, description : string, deadline : Timestamp, maxMark : int) : int
     + grantExtension(actor : const User&, assignmentId : int, studentId : int, newDeadline : Timestamp, reason : string) : void
+    + grantClassExtension(actor : const User&, assignmentId : int, newDeadline : Timestamp, reason : string) : void
+    + classExtension(actor : const User&, assignmentId : int) : optional<ClassExtension>
+    + deadlineFor(a : const Assignment&, studentId : int) : DeadlineInfo
     + effectiveDeadline(a : const Assignment&, studentId : int) : Timestamp
     + listForStudent(student : const User&) : vector<StudentAssignmentView>
   }
@@ -79,6 +82,17 @@ package "services" {
     + displayName(userId : int) : string
   }
   DirectoryService --> IUserRepository
+  enum ExtensionKind <<v1.1>> {
+    None
+    Individual
+    Class
+  }
+  class DeadlineInfo <<struct>> <<v1.1>> {
+    + deadline : Timestamp
+    + kind : ExtensionKind
+  }
+  AssignmentService ..> DeadlineInfo
+  DeadlineInfo --> ExtensionKind
   class LmsSystem <<composition root>> {
     + {static} createDefault(databasePath : string) : unique_ptr<LmsSystem>
   }

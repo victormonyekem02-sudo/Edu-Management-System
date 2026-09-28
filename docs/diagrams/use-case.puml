@@ -1,6 +1,6 @@
 @startuml use-case
 !pragma layout smetana
-title Moderated LMS - Use Case Diagram (v1.0)
+title Moderated LMS - Use Case Diagram (v1.1)
 left to right direction
 skinparam packageStyle rectangle
 skinparam actorStyle awesome
@@ -34,6 +34,7 @@ rectangle "Moderated Learning Management System" {
 
   usecase "UC-05 Create assignment" as UC05
   usecase "UC-04 Grant individual\nextension" as UC04
+  usecase "UC-16 Grant class-wide\nextension (v1.1)" as UC16
   usecase "UC-02 Mark submission" as UC02
   usecase "Re-mark submission" as UC02R
   usecase "Apply late penalty" as PEN
@@ -59,6 +60,8 @@ Student --> UC06
 
 Lecturer --> UC05
 Lecturer --> UC04
+Lecturer --> UC16
+UC16 ..> DEAD : <<include>>
 Lecturer --> UC02
 
 HoD --> UC03

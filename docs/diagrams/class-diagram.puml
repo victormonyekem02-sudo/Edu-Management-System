@@ -103,6 +103,8 @@ package "domain" {
     + createdBy : int
     + createdAt : Timestamp
   }
+  class ClassExtension <<struct>> {
+  }
   class Extension <<struct>> {
     + id : int
     + assignmentId : int
@@ -162,6 +164,7 @@ package "domain" {
   Department "1" -- "0..*" Course
   Course "1" -- "0..*" Assignment
   Assignment "1" -- "0..*" Extension
+  Assignment "1" -- "0..1" ClassExtension
   Assignment "1" -- "0..*" Submission
   Submission "1" *-- "1..*" MarkAuditEntry : audit trail >
   Submission --> SubmissionStatus

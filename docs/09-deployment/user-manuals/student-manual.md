@@ -26,7 +26,9 @@ Shows every assignment of your courses, sorted by deadline:
 | Column | Meaning |
 |--------|---------|
 | ID | Number you type when submitting |
-| Your deadline | Your personal deadline. "(extended)" means your lecturer gave you more time |
+| Original deadline | The deadline set when the assignment was created |
+| Your deadline | The deadline that applies to you |
+| Extension | `-` none, `class` the whole class was given more time, `individual` you were given more time personally |
 | Time | Time left, or "deadline passed" |
 | Status | Not submitted, Submitted, Submitted late, Marked (awaiting moderation), Moderated (awaiting release), Released. "(v2)" means you have resubmitted once |
 

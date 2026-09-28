@@ -46,6 +46,8 @@ package "data  <<Repository / DAO>>" {
     + listByCourse(courseId : int) : vector<Assignment>
     + saveExtension(e : const Extension&) : void
     + findExtension(assignmentId : int, studentId : int) : optional<Extension>
+    + saveClassExtension(e : const ClassExtension&) : void
+    + findClassExtension(assignmentId : int) : optional<ClassExtension>
   }
   interface ISubmissionRepository {
     + add(s : const Submission&) : int

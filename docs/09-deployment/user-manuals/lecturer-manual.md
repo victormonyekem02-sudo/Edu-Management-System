@@ -8,9 +8,10 @@ Log in as described in the Student manual (option `1`, username, password; the p
 3. View submissions for an assignment
 4. Mark or re-mark a submission
 5. Grant an individual extension
-6. View extensions for an assignment
-7. View all my notifications
-8. Change my password
+6. Extend the deadline for the whole class      (new in v1.1)
+7. View extensions for an assignment
+8. View all my notifications
+9. Change my password
 0. Log out
 ```
 
@@ -44,5 +45,12 @@ Every mark and change is recorded in the audit log with your name, the time and 
 
 The student is notified and sees "(extended)" next to their deadline. Granting an extension again for the same student replaces the earlier one. If the student had already submitted late but within the new deadline, the work is automatically treated as on time. You cannot grant an extension once the student's mark has been moderated.
 
-## 6 - View extensions
-Lists every extension for an assignment: student, new deadline, reason, who granted it.
+## 6 - Extend the deadline for the whole class (v1.1)
+Use this when the whole class needs more time (e.g. a sports day, a power cut, an exam clash).
+1. Choose the assignment ID.
+2. Type the new deadline (`YYYY-MM-DD HH:MM`), later than the original deadline, and a reason.
+
+Every enrolled student is notified and sees *class* in the Extension column of their assignment list. A student who has an **individual** extension that is even later keeps it. Choosing this option again replaces the class deadline. Work already submitted late but within the new deadline is treated as on time. The option is refused once the HoD has started moderating marks for the assignment.
+
+## 7 - View extensions
+Shows the class extension (if any) and every individual extension for an assignment: student, new deadline, reason, who granted it.

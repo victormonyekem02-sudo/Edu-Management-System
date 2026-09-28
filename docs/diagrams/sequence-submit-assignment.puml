@@ -22,9 +22,11 @@ SS -> CR : isEnrolled(courseId, studentId)
 CR --> SS : true
 SS -> SS : requireText(content)
 SS -> AS : effectiveDeadline(assignment, studentId)
+AS -> AR : findClassExtension(assignmentId)
+AR --> AS : classExtension?  (v1.1)
 AS -> AR : findExtension(assignmentId, studentId)
 AR --> AS : extension?
-AS --> SS : deadline = max(deadline, extension)
+AS --> SS : deadline = max(deadline, classExtension, extension)
 SS -> SS : late = clock.now() > deadline
 SS -> SR : find(assignmentId, studentId)
 SR --> SS : existing?

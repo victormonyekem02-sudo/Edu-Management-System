@@ -47,7 +47,15 @@ Scales: Likelihood (L) and Impact (I) from 1 (very low) to 5 (very high); **Expo
 | R2 | Reduced | 3 x 4 = 12 | Implementation and tests complete; remaining work is documentation and CR1 |
 | R13 | **New** (Technical): CI on GitHub Actions has never run (no remote configured on the development PC) -> pipeline errors discovered late | 3 x 2 = 6 | Mitigation: the Linux configuration (GCC, -Werror) was reproduced locally; push early and fix CI before the viva; owner: Student |
 
-## 5. Current top risks (at release v1.0)
-1. **R2** schedule/documentation (12) - monitored weekly.
-2. **R12** network-share misuse (10) - installation guide warning.
-3. **R10** viva preparation (10) - demo script in the user manuals, design rationale in the SDD.
+## 5. Update after maintenance (v1.1)
+
+| ID | Change | New L x I | Reason |
+|----|--------|-----------|--------|
+| R14 | **New, closed** (Technical): schema change in CR1 corrupts or loses v1.0 school data during upgrade | 2 x 5 -> 1 x 5 = 5 | Additive migration 002 only; `IT_DB.UpgradesVersion1DatabaseWithoutDataLoss`; backup step first in the upgrade instructions |
+| R2 | Reduced | 2 x 4 = 8 | All phases delivered; only report/viva remain |
+
+## 6. Current top risks (after v1.1)
+1. **R12** network-share misuse (10) - installation guide warning.
+2. **R10** viva preparation (10) - demo script (`--seed-demo`, acceptance transcripts), design rationale in the SDD.
+3. **R2** schedule/documentation (8) - final report and viva remain.
+4. **R13** CI not yet run on GitHub (6) - push the repository and check the Actions run before the viva.

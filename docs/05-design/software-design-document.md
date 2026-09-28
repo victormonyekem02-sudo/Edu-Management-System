@@ -1,6 +1,6 @@
 # Software Design Document (SDD)
 
-**System:** Moderated LMS - design baseline approved at Gate 2 (release v1.0).
+**System:** Moderated LMS - design baseline approved at Gate 2, updated for release v1.1 (change request CR1).
 All diagrams are PlantUML sources in [`docs/diagrams`](../diagrams); rendered images are in `docs/diagrams/rendered`.
 
 ---
@@ -37,6 +37,8 @@ Rules enforced in the code: the UI never includes a repository or SQL (three suc
 | **Single-module "big ball"** (menus calling SQL directly) | Fastest to write, but rules would be scattered across menu code, untestable without typing into the console, and any later change request would touch many places. |
 | **Hexagonal (ports and adapters)** | Very close to what was built (the repository interfaces are ports). Naming the whole system hexagonal would add ceremony (driving ports for a single console adapter) without benefit at this size. |
 
+**Evidence from maintenance (CR1).** Because the effective deadline is computed in exactly one method (`AssignmentService::deadlineFor`), the class-wide extension changed lateness, penalties, resubmission and reclassification everywhere without touching `SubmissionService` or `MarkingService`. Only 1 of 264 existing tests needed an update, and that was for an intentional display change.
+
 ### 1.3 Cross-cutting decisions
 | Decision | Choice | Reason |
 |----------|--------|--------|
@@ -45,7 +47,7 @@ Rules enforced in the code: the UI never includes a repository or SQL (three suc
 | Errors | Exception hierarchy rooted at `LmsError` (`ValidationError`, `AuthorizationError`, `BusinessRuleError`, `NotFoundError`, `DatabaseError`, ...) | The UI catches `LmsError` in one place (Template Method `RoleMenu::run`) so no failure ends the session (NFR-08) |
 | Transactions | `ITransactionRunner` using nested SQLite SAVEPOINTs | Mark + audit are atomic (NFR-07); services can nest safely |
 | Password hashing | Argon2id via the PHC reference library | See section 5 |
-| Schema evolution | Numbered SQL migrations embedded at build time, `PRAGMA user_version` | One source of truth; a later release adds a new numbered file instead of editing 001 |
+| Schema evolution | Numbered SQL migrations embedded at build time, `PRAGMA user_version` | One source of truth; CR1 (v1.1) added migration 002 without touching 001, and v1.0 databases upgrade in place |
 
 ---
 
@@ -121,7 +123,7 @@ Swimlanes: Student, System, Lecturer, Head of Department. Decision points show t
 ### 4.1 Entity-relationship diagram (3NF)
 ![ERD](../diagrams/rendered/erd.png)
 
-The authoritative SQL schema is [`sql/001_initial_schema.sql`](../../sql/001_initial_schema.sql). CMake embeds these files into the program (`GeneratedMigrations.h`), so the documentation, the tests and the executable cannot drift apart.
+The authoritative SQL schema is [`sql/001_initial_schema.sql`](../../sql/001_initial_schema.sql) (v1.0) plus [`sql/002_class_extension.sql`](../../sql/002_class_extension.sql) (v1.1, CR1). CMake embeds these files into the program (`GeneratedMigrations.h`), so the documentation, the tests and the executable cannot drift apart.
 
 ### 4.2 Normalisation
 - **1NF:** every column is atomic (no lists; lecturers of a course and enrolments are separate junction tables `course_lecturer`, `enrolment`; submission versions are rows in `submission_version`).
@@ -188,6 +190,10 @@ The authoritative SQL schema is [`sql/001_initial_schema.sql`](../../sql/001_ini
 | notification | notification_id | INTEGER | N | PK |
 | | user_id | INTEGER | N | FK CASCADE |
 | | message, created_at, is_read | TEXT, INTEGER, INTEGER | N | |
+| class_extension *(v1.1)* | assignment_id | INTEGER | N | PK and FK assignment (at most one class extension per assignment) |
+| | new_deadline | INTEGER | N | > assignment.deadline (service) |
+| | reason | TEXT | N | non-empty |
+| | granted_by, granted_at | INTEGER | N | FK app_user; epoch |
 
 Indexes: `ix_enrolment_student`, `ix_assignment_course`, `ix_submission_student`, `ix_submission_status`, `ix_mark_audit_submission`, `ix_notification_user`, `ix_course_department`, `ix_course_lecturer_lecturer`, `ix_app_user_role`. These support the queries the NFR-01..03 measurements depend on.
 
@@ -203,6 +209,8 @@ Indexes: `ix_enrolment_student`, `ix_assignment_course`, `ix_submission_student`
 | `SubmissionStatus` (enum) | `submission.status` TEXT + CHECK | Stored as readable codes rather than integers so the database remains understandable to an auditor. |
 | `MarkAuditEntry`, `AuditAction` | `mark_audit` | 1:1; append-only is enforced in the database, not only in code. |
 | `Notification` | `notification` | 1:1 |
+| `ClassExtension` *(v1.1)* | `class_extension` | 1:1; `assignment_id` is the key because there is at most one per assignment |
+| `ExtensionKind`, `DeadlineInfo` *(v1.1)* | - | Computed by `AssignmentService::deadlineFor` (latest of original, class, individual); not stored, to avoid a derived column |
 | Services, policies, publisher | - | Behaviour only; no persistence. |
 
 ---
