@@ -6,7 +6,7 @@ The administrator prepares the school in the system at the start of each term an
 1. List user accounts
 2. Create user account
 3. Activate / deactivate an account
-4. Reset a user's password (also unlocks)
+4. Reset a user's password
 5. List departments
 6. Create department
 7. List courses

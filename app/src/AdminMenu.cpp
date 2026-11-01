@@ -10,7 +10,7 @@ std::vector<MenuItem> AdminMenu::items() {
         {"List user accounts", [this] { listUsers(); }},
         {"Create user account", [this] { createUser(); }},
         {"Activate / deactivate an account", [this] { toggleActive(); }},
-        {"Reset a user's password (also unlocks)", [this] { resetPassword(); }},
+        {"Reset a user's password", [this] { resetPassword(); }},
         {"List departments", [this] { listDepartments(); }},
         {"Create department", [this] { createDepartment(); }},
         {"List courses", [this] { listCourses(); }},
