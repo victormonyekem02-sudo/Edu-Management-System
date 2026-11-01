@@ -25,3 +25,13 @@ coverage/
 
 # Generated intermediate of the report build
 docs/report/final-report.html
+
+index.html
+package.json
+package-lock.json
+tsconfig.json
+vite.config.js
+/src/
+docs/report/build_docx.cjs
+docs/report/final-report.docx
+docs/viva/
